@@ -1,0 +1,24 @@
+{
+	"id": {
+		"type": "INTEGER",
+		"autoIncrement": true,
+		"allowNull": false,
+		"primaryKey": true
+	},
+	"title": {
+		"type": "STRING",
+		"allowNull": false
+	},
+	"mp3Path": {
+		"type": "STRING",
+		"allowNull": true
+	},
+	"imagePath": {
+		"type": "STRING",
+		"allowNull": true
+	},
+	"duration": {
+		"type": "INTEGER",
+		"allowNull": true
+	}
+}

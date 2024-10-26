@@ -1,0 +1,12 @@
+@import url("reset.css");
+
+:root {
+	--noir: #151313;
+	--rouge: #ff312e;
+	--blanc: #e9fff9;
+}
+
+* {
+	background-color: var(--noir);
+	color: var(--blanc);
+}
