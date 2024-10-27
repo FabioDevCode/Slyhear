@@ -44,7 +44,8 @@ const morgan_config = {
 			req.url === "/" ||
 			req.url.includes("/css") ||
 			req.url.includes("/img") ||
-			req.url.includes("/js")
+			req.url.includes("/js") ||
+			req.url.includes("/plugins")
 		) {
 			return true;
 		}
