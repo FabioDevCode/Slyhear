@@ -8,3 +8,5 @@ src/config/database.js
 src/database
 src/database/*
 src/config/env.json
+src/upload/images/*.jpg
+src/upload/sounds/*.mp3

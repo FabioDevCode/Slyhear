@@ -62,14 +62,14 @@ consoleStamp(console, {
 
 // Database init
 import models from "./models/index.js";
-await models.sequelize.sync()
-.then(() => {
-    console.log("Database & tables updated !");
-})
-.catch((err) => {
-    console.error("Error sync database:", err);
-});
-
+await models.sequelize
+	.sync()
+	.then(() => {
+		console.log("Database & tables updated !");
+	})
+	.catch((err) => {
+		console.error("Error sync database:", err);
+	});
 
 app.use(cors());
 app.use(cookieParser());
