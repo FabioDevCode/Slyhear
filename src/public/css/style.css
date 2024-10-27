@@ -16,7 +16,7 @@
 	background: var(--rouge);
 	background: linear-gradient(0deg, rgba(199,23,23,1) 45%, rgba(103,12,12,1) 100%);
 	box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px,
-		#670C0C 0 -3px 0 inset;
+		#670C0C 0 -2px 0 inset;
 
 	&:focus,
 	&:hover {
@@ -26,6 +26,6 @@
 	&:active {
 		transform: translateY(2px);
 		box-shadow: rgba(0, 0, 0, 0.3) 0 2px 4px,
-		#670C0C 0 -3px 0 inset;
+		#670C0C 0 -2px 0 inset;
 	}
 }

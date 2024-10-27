@@ -39,6 +39,10 @@ body {
                     padding: 16px;
                     height: 100%;
                     width: 100%;
+
+                    i {
+                        font-size: 20px;
+                    }
                 }
 
                 svg {

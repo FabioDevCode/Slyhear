@@ -29,8 +29,15 @@
 
         input {
             height: 40px;
+            border-radius: 4px;
             padding: 0px 10px;
             font-size: 1.1em;
+
+            &::placeholder {
+                font-size: .9em;
+                font-style: italic;
+                color: rgba(21, 19, 19, .4);
+            }
         }
     }
 }
@@ -39,6 +46,11 @@
 #main_download-list {
     overflow: hidden;
     width: calc(60%);
+
+    #download-list-btn {
+        display: flex;
+        gap: 10px !important;
+    }
 
     ul {
         display: flex;
@@ -50,11 +62,10 @@
         li {
             overflow: hidden;
             position: relative;
-            height: 70px;
+            height: 60px;
             border-radius: 6px;
             font-size: .9em;
             width: calc(50% - 5px);
-            padding: 10px;
             background-color: var(--noir);
             display: flex;
             align-items: center;
@@ -62,23 +73,59 @@
             div {
                 display: flex;
                 flex-direction: column;
-                gap: 4px;
+                overflow: hidden;
+                padding: 10px;
 
-                svg {
-                    height: 30px;
-                    fill: var(--blanc);
+                h3, p {
+                    color: rgba(233, 255, 249, .6);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin: 0;
                 }
             }
 
             div.trash-list {
-                position: absolute;
-                right: 0px;
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background-color: transparent;
+                flex-shrink: 0;
+
+                svg {
+                    height: 24px;
+                    fill: var(--blanc);
+                }
+
+                button {
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 45px;
+                    width: 45px;
+                    border-radius: 4px;
+                    color: var(--blanc);
+
+                    i {
+                        font-size: 24px;
+                    }
+
+                    &:hover {
+                        background: var(--rouge);
+                        background: linear-gradient(0deg, rgba(199,23,23,1) 45%, rgba(103,12,12,1) 100%);
+                        box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px,
+                            #670C0C 0 -1px 0 inset;
+                    }
+
+                    &:active {
+                        transform: scale(.98);
+                        box-shadow: rgba(0, 0, 0, 0.3) 0 2px 4px,
+                        #670C0C 0 -1px 0 inset;
+                    }
+                }
             }
         }
     }
