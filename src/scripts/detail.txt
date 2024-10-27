@@ -1,0 +1,5 @@
+Javascript & Python3
+
+
+ffmpeg
+pip3 install yt-dlp pydub
