@@ -1,12 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+@import url("root.css");
 @import url("reset.css");
 
-:root {
-	--noir: #151313;
-	--rouge: #ff312e;
-	--blanc: #e9fff9;
-}
+@import url("main_layout.css");
+@import url("download_pages.css");
 
-* {
-	background-color: var(--noir);
+
+.main-btn {
+	cursor: pointer;
+	border: 0px solid;
+	border-radius: 4px;
+	padding: 16px 30px;
+	font-size: 1em;
 	color: var(--blanc);
+	background: var(--rouge);
+	background: linear-gradient(0deg, rgba(199,23,23,1) 45%, rgba(103,12,12,1) 100%);
+	box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px,
+		#670C0C 0 -3px 0 inset;
+
+	&:focus,
+	&:hover {
+		background: linear-gradient(0deg, rgba(199,23,23,1) 55%, rgba(103,12,12,1) 100%);
+	}
+
+	&:active {
+		transform: translateY(2px);
+		box-shadow: rgba(0, 0, 0, 0.3) 0 2px 4px,
+		#670C0C 0 -3px 0 inset;
+	}
 }

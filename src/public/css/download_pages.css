@@ -1,0 +1,85 @@
+#main_download {
+    display: flex;
+    height: calc(100vh - 92px);
+    gap: 20px;
+    border-radius: 10px;
+    border: 1px solid rgb(47, 44, 44);
+    background-color: #1e1e1e;
+    padding: 20px;
+}
+
+
+#main_download-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    width: calc(40%);
+}
+
+#main_download-form {
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+
+        label {
+            padding-bottom: 6px;
+        }
+
+        input {
+            height: 40px;
+            padding: 0px 10px;
+            font-size: 1.1em;
+        }
+    }
+}
+
+
+#main_download-list {
+    overflow: hidden;
+    width: calc(60%);
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-bottom: 20px;
+        gap: 10px;
+
+        li {
+            overflow: hidden;
+            position: relative;
+            height: 70px;
+            border-radius: 6px;
+            font-size: .9em;
+            width: calc(50% - 5px);
+            padding: 10px;
+            background-color: var(--noir);
+            display: flex;
+            align-items: center;
+
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                svg {
+                    height: 30px;
+                    fill: var(--blanc);
+                }
+            }
+
+            div.trash-list {
+                position: absolute;
+                right: 0px;
+                width: 70px;
+                height: 70px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: transparent;
+            }
+        }
+    }
+}

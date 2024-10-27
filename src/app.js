@@ -40,7 +40,12 @@ app.use((req, res, next) => {
 // Console write
 const morgan_config = {
 	skip: (req) => {
-		if (req.url === "/") {
+		if (
+			req.url === "/" ||
+			req.url.includes("/css") ||
+			req.url.includes("/img") ||
+			req.url.includes("/js")
+		) {
 			return true;
 		}
 	},

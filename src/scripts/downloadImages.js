@@ -18,8 +18,8 @@ async function downloadImage(url) {
     try {
         const videoId = new URL(url).searchParams.get('v');
         const imageUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-        const imagePath = path.join(imagesDir, `${videoId}.jpg`);
-        const croppedImagePath = path.join(imagesDir, `${videoId}_cropped.jpg`);
+        const imagePath = path.join(imagesDir, `${videoId}_temp.jpg`);
+        const croppedImagePath = path.join(imagesDir, `${videoId}.jpg`);
 
         const response = await fetch(imageUrl);
         if (!response.ok) {
