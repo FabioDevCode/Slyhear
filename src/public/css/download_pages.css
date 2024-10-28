@@ -61,7 +61,6 @@
 
         li {
             overflow: hidden;
-            position: relative;
             height: 60px;
             border-radius: 6px;
             font-size: .9em;
@@ -69,6 +68,8 @@
             background-color: var(--noir);
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            padding: 4px;
 
             div {
                 display: flex;
@@ -111,22 +112,76 @@
 
                     i {
                         font-size: 24px;
+                        color: rgba(233, 255, 249, .6);
                     }
 
                     &:hover {
                         background: var(--rouge);
-                        background: linear-gradient(0deg, rgba(199,23,23,1) 45%, rgba(103,12,12,1) 100%);
+                        background: linear-gradient(0deg, #c71717 45%, rgba(103,12,12,1) 100%);
                         box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px,
-                            #670C0C 0 -1px 0 inset;
+                            #670C0C 0 -2px 0 inset;
+
+                        i {
+                            color: var(--blanc)
+                        }
                     }
 
                     &:active {
                         transform: scale(.98);
                         box-shadow: rgba(0, 0, 0, 0.3) 0 2px 4px,
-                        #670C0C 0 -1px 0 inset;
+                        #670C0C 0 -2px 0 inset;
                     }
                 }
             }
         }
     }
+}
+
+
+.file-container label {
+    background-color: #281717;
+    border: 1px dashed #c71717;
+    color: #c71717;
+}
+
+.file-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0px;
+}
+
+.file-container label {
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.file-container label div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1.25em;
+    padding-bottom: 1.5em;
+    height: 150px;
+}
+
+.file-container label div svg {
+    width: 1.7em;
+    height: 1.7em;
+}
+
+.file-container label div p {
+    font-size: .8em;
+    margin: .15em;
+}
+
+.file-container label div p span {
+    font-weight: 600;
 }

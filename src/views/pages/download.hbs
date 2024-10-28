@@ -2,22 +2,45 @@
 
     <div id="main_download-left">
         <div id="main_download-form">
-            <div class="form-group">
-                <label for="url">
-                    Url
+            <form action="" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="url">
+                        Url
+                    </label>
+                    <input name="url" type="text" placeholder="https://www.youtube.com/watch?v=Hg3G1E2tNCA">
+                </div>
+                <div class="form-group">
+                    <label for="title">
+                        Titre
+                    </label>
+                    <input name="title" type="text" placeholder="Daft Punk - Television Rules the Nation / Crescendolls">
+                </div>
+
+                <button btn-add-list="" class="main-btn">
+                    Ajouter à la liste
+                </button>
+            </form>
+
+            <div drag-and-drop-zone="" class="file-container">
+                <label for="dropzone-file">
+                    <div>
+                        <svg class="" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                        </svg>
+                        <b>Importer une liste</b>
+                        <p class="first">
+                            <span>Click to upload</span> or drag and drop
+                        </p>
+                        <p class="second">JSON (Slyhear.json)</p>
+                    </div>
+                    <input input-dropzone="" id="dropzone-file" type="file" accept="application/json" hidden="" />
                 </label>
-                <input name="url" type="text" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-            </div>
-            <div class="form-group">
-                <label for="title">
-                    Titre
-                </label>
-                <input name="title" type="text" placeholder="Rick Astley - Never Gonna Give You Up">
             </div>
 
-            <button data-btn-add-list="" class="main-btn">
-                Ajouter à la liste
+            <button btn-dl-exemple="" class="main-btn">
+                Télécharger un exmple de JSON
             </button>
+            <a link-dl-exemple=""></a>
         </div>
 
         <div id="waiting-msg">
@@ -50,10 +73,10 @@
         </ul>
 
         <div id="download-list-btn">
-            <button class="main-btn">
+            <button btn-download-list="" class="main-btn">
                 Télécharger la liste
             </button>
-            <button class="main-btn">
+            <button btn-clear-list="" class="main-btn">
                 Vider la liste
             </button>
         </div>
