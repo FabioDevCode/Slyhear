@@ -1,6 +1,7 @@
 import yt_dlp # type: ignore
 import os
 import sys
+import json
 from urllib.parse import urlparse, parse_qs
 
 sounds_dir = os.path.join(os.getcwd(), "..", "upload", "sounds")
@@ -13,6 +14,7 @@ ydl_opts = {
         'preferredquality': '192',
     }],
     'noplaylist': True,  # Ne télécharge pas les playlists
+    'quiet': True,  # Évite d'afficher les logs de téléchargement
 }
 
 def download_mp3(url):
@@ -24,14 +26,15 @@ def download_mp3(url):
             ydl.download([url])
             mp3_file_path = os.path.join(sounds_dir, f'{video_id}.mp3')
             if os.path.exists(mp3_file_path):  # Vérifie si le fichier mp3 existe déjà
-                return f"Téléchargement terminé pour {url} sous le nom {mp3_file_path}"
-            else:
-                return f"Le fichier audio pour {url} n'a pas été trouvé dans le répertoire de sortie."
+                return {'url': url, 'status': 'success'}
     except Exception as e:
-        return f"Erreur lors du téléchargement de {url}: {str(e)}"
+        return {'url': url, 'status': 'error', 'message': str(e)}
 
 urls = sys.argv[1:]
 results = [download_mp3(url) for url in urls]
 
-for result in results:
-    print(result)
+# Filtrer les résultats pour récupérer uniquement les URLs réussies
+successful_downloads = [result for result in results if result['status'] == 'success']
+
+# Convertir en JSON et imprimer
+print(json.dumps(successful_downloads))
