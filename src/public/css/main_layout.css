@@ -1,94 +1,92 @@
 body {
-    display: flex;
-    min-height: 100vh;
+	display: flex;
+	min-height: 100vh;
 }
 
 #menu {
-    background-color: var(--noir);
-    border-right: 1px solid rgb(47, 44, 44);
-    width: 300px;
-    height: 100vh;
-    overflow: hidden;
-    padding: 20px;
+	background-color: var(--noir);
+	border-right: 1px solid rgb(47, 44, 44);
+	width: 300px;
+	height: 100vh;
+	overflow: hidden;
+	padding: 20px;
 
-    nav {
-        padding: 20px 0px;
-        width: 100%;
+	nav {
+		padding: 20px 0px;
+		width: 100%;
 
-        ul {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            height: 100%;
-            width: 100%;
+		ul {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			height: 100%;
+			width: 100%;
 
-            li {
-                overflow: hidden;
-                cursor: pointer;
-                border-radius: 6px;
-                height: 50px;
-                width: 100%;
-                display: flex;
-                align-items: center;
+			li {
+				overflow: hidden;
+				cursor: pointer;
+				border-radius: 6px;
+				height: 50px;
+				width: 100%;
+				display: flex;
+				align-items: center;
 
-                a {
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    padding: 16px;
-                    height: 100%;
-                    width: 100%;
+				a {
+					cursor: pointer;
+					display: flex;
+					align-items: center;
+					gap: 10px;
+					padding: 16px;
+					height: 100%;
+					width: 100%;
 
-                    i {
-                        font-size: 20px;
-                    }
-                }
+					i {
+						font-size: 20px;
+					}
+				}
 
-                svg {
-                    width: 30px;
-                    fill: white;
-                }
+				svg {
+					width: 30px;
+					fill: white;
+				}
 
-                &:hover {
-                    background-color: #1e1e1e;
-                }
-            }
+				&:hover {
+					background-color: #1e1e1e;
+				}
+			}
 
-            li.active {
-                background-color: #1e1e1e;
-            }
-        }
-    }
+			li.active {
+				background-color: #1e1e1e;
+			}
+		}
+	}
 }
 
 #menu div {
-    display: flex;
-    border-bottom: 1px solid rgb(47, 44, 44);
-    padding-bottom: 20px;
-    align-items: center;
-    gap: 10px;
+	display: flex;
+	border-bottom: 1px solid rgb(47, 44, 44);
+	padding-bottom: 20px;
+	align-items: center;
+	gap: 10px;
 
-    img {
-        height: 40px;
-    }
+	img {
+		height: 40px;
+	}
 
-    h1 {
-        font-size: 1.8em;
-    }
+	h1 {
+		font-size: 1.8em;
+	}
 }
 
-
-
 section {
-    padding: 20px;
-    height: 100vh;
-    width: calc(100% - 300px);
+	padding: 20px;
+	height: 100vh;
+	width: calc(100% - 300px);
 
-    h2 {
-        display: flex;
-        width: 100%;
-        font-size: 2em;
-        margin-bottom: 20px;
-    }
+	h2 {
+		display: flex;
+		width: 100%;
+		font-size: 2em;
+		margin-bottom: 20px;
+	}
 }

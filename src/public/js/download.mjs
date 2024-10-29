@@ -1,210 +1,202 @@
-let allTrashBtn = document.querySelectorAll('[data-trash]');
+let allTrashBtn = document.querySelectorAll("[data-trash]");
 
 const showList = () => {
-    const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
-    const ulAllList = document.querySelector('[data-slyher-list]');
-    let content = '';
+	const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
+	const ulAllList = document.querySelector("[data-slyher-list]");
+	let content = "";
 
-    for (const link of arrayList) {
-        content += `<li><div><h3>${link.title}</h3><p>${link.url}</p></div><div class="trash-list"><button data-trash="" data-trash-title="${link.title}"><i class="fas fa-times"></i></button></div></li>`;
-    }
-    ulAllList.innerHTML = content;
-    content = '';
-    allTrashBtn = document.querySelectorAll('[data-trash]');
+	for (const link of arrayList) {
+		content += `<li><div><h3>${link.title}</h3><p>${link.url}</p></div><div class="trash-list"><button data-trash="" data-trash-title="${link.title}"><i class="fas fa-times"></i></button></div></li>`;
+	}
+	ulAllList.innerHTML = content;
+	content = "";
+	allTrashBtn = document.querySelectorAll("[data-trash]");
 
-    for (const trash_btn of allTrashBtn) {
-        trash_btn.addEventListener('click', function() {
-            const titleToRemove = this.getAttribute('data-trash-title');
-            const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
-            const updatedArrayList = arrayList.filter(item => item.title !== titleToRemove);
-            localStorage.setItem("slyhear-list", JSON.stringify(updatedArrayList));
-            showList();
-        })
-    };
+	for (const trash_btn of allTrashBtn) {
+		trash_btn.addEventListener("click", function () {
+			const titleToRemove = this.getAttribute("data-trash-title");
+			const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
+			const updatedArrayList = arrayList.filter(
+				(item) => item.title !== titleToRemove,
+			);
+			localStorage.setItem("slyhear-list", JSON.stringify(updatedArrayList));
+			showList();
+		});
+	}
 };
 
 showList();
 
-document.querySelector('[btn-add-list]').addEventListener('click', () => {
-    const url = document.querySelector('[name="url"]');
-    const title = document.querySelector('[name="title"]');
+document.querySelector("[btn-add-list]").addEventListener("click", () => {
+	const url = document.querySelector('[name="url"]');
+	const title = document.querySelector('[name="title"]');
 
-    if (!url.value.length || !title.value.length) {
-        Toastify({
-            text: "Veuillez remplir une URL et un TITRE",
-            className: "error",
-            duration: 3000,
-            newWindow: true,
-            close: false,
-            gravity: "bottom",
-            position: "left",
-            stopOnFocus: true,
-            onClick: () => {}
-        }).showToast();
-        return
-    }
+	if (!url.value.length || !title.value.length) {
+		Toastify({
+			text: "Veuillez remplir une URL et un TITRE",
+			className: "error",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "left",
+			stopOnFocus: true,
+			onClick: () => {},
+		}).showToast();
+		return;
+	}
 
-    const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
+	const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
 
-    for (const musicObj of arrayList) {
-        if(url.value === musicObj.url) {
-            Toastify({
-                text: "Cette URL est déjà présente dans la liste. Veuillez changer l'URL avant de Valider",
-                className: "warning",
-                duration: 3000,
-                newWindow: true,
-                close: false,
-                gravity: "bottom",
-                position: "left",
-                stopOnFocus: true,
-                onClick: () => {}
-            }).showToast();
-            return
-        }
-    };
+	for (const musicObj of arrayList) {
+		if (url.value === musicObj.url) {
+			Toastify({
+				text: "Cette URL est déjà présente dans la liste. Veuillez changer l'URL avant de Valider",
+				className: "warning",
+				duration: 3000,
+				newWindow: true,
+				close: false,
+				gravity: "bottom",
+				position: "left",
+				stopOnFocus: true,
+				onClick: () => {},
+			}).showToast();
+			return;
+		}
+	}
 
-    arrayList.push({
-        url: url.value.trim(),
-        title: title.value.trim()
-    });
+	arrayList.push({
+		url: url.value.trim(),
+		title: title.value.trim(),
+	});
 
-    arrayList.sort((a, b) => {
-        return a.title.localeCompare(b.title);
-    });
+	arrayList.sort((a, b) => {
+		return a.title.localeCompare(b.title);
+	});
 
-    localStorage.setItem("slyhear-list", JSON.stringify(arrayList));
+	localStorage.setItem("slyhear-list", JSON.stringify(arrayList));
 
-    url.value = "";
-    title.value = "";
+	url.value = "";
+	title.value = "";
 
-    showList();
+	showList();
 });
 
-document.querySelector('[btn-clear-list]').addEventListener('click', () => {
-    if(window.confirm('Êtes-vous sûre de vouloir vider la liste ?')) {
-        localStorage.setItem("slyhear-list", JSON.stringify([]));
-        Toastify({
-            text: "Liste vider avec succès !",
-            className: "success",
-            duration: 3000,
-            newWindow: true,
-            close: false,
-            gravity: "bottom",
-            position: "left",
-            stopOnFocus: true,
-            onClick: () => {}
-        }).showToast();
+document.querySelector("[btn-clear-list]").addEventListener("click", () => {
+	if (window.confirm("Êtes-vous sûre de vouloir vider la liste ?")) {
+		localStorage.setItem("slyhear-list", JSON.stringify([]));
+		Toastify({
+			text: "Liste vider avec succès !",
+			className: "success",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "left",
+			stopOnFocus: true,
+			onClick: () => {},
+		}).showToast();
 
-        showList();
-    }
+		showList();
+	}
 });
 
 // DRAG AND DROP FILE =============================================== //
-const inputFile = document.querySelector('[input-dropzone]');
-const fileContainer = document.querySelector('[drag-and-drop-zone]');
+const inputFile = document.querySelector("[input-dropzone]");
+const fileContainer = document.querySelector("[drag-and-drop-zone]");
 
-fileContainer.addEventListener('dragover', (e) => {
-    e.preventDefault();
+fileContainer.addEventListener("dragover", (e) => {
+	e.preventDefault();
 });
 
-fileContainer.addEventListener('drop', (e) => {
-    e.preventDefault();
-    if(e.dataTransfer.items.length > 1) {
-        Toastify({
-            text: "Veuillez importer un seul fichier.",
-            className: "error",
-            duration: 5000,
-            newWindow: true,
-            close: true,
-            gravity: "bottom",
-            position: "left",
-            stopOnFocus: true,
-            onClick: () => {}
-        }).showToast();
-    } else if (e.dataTransfer.items.length === 1) {
-        [...e.dataTransfer.items].forEach((item, i) => {
-            if (item.kind === "file") {
-                const file = item.getAsFile();
-                const reader = new FileReader();
-                reader.readAsText(file);
-                reader.onload = () => {
-                    const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
-                    const newArray = [
-                        ...arrayList,
-                        ...JSON.parse(reader.result)
-                    ];
-                    localStorage.setItem("slyhear-list", JSON.stringify(newArray));
-                    showList();
-                };
-                reader.onerror = () => {
-                    console.error(reader.error);
-                    Toastify({
-                        text: "Une erreur s'est produite, veuillez réessayer plutard.",
-                        className: "error",
-                        duration: 5000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "bottom",
-                        position: "left",
-                        stopOnFocus: true,
-                        onClick: () => {}
-                    }).showToast();
-                }
-            }
-        })
-    }
+fileContainer.addEventListener("drop", (e) => {
+	e.preventDefault();
+	if (e.dataTransfer.items.length > 1) {
+		Toastify({
+			text: "Veuillez importer un seul fichier.",
+			className: "error",
+			duration: 5000,
+			newWindow: true,
+			close: true,
+			gravity: "bottom",
+			position: "left",
+			stopOnFocus: true,
+			onClick: () => {},
+		}).showToast();
+	} else if (e.dataTransfer.items.length === 1) {
+		[...e.dataTransfer.items].forEach((item, i) => {
+			if (item.kind === "file") {
+				const file = item.getAsFile();
+				const reader = new FileReader();
+				reader.readAsText(file);
+				reader.onload = () => {
+					const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
+					const newArray = [...arrayList, ...JSON.parse(reader.result)];
+					localStorage.setItem("slyhear-list", JSON.stringify(newArray));
+					showList();
+				};
+				reader.onerror = () => {
+					console.error(reader.error);
+					Toastify({
+						text: "Une erreur s'est produite, veuillez réessayer plutard.",
+						className: "error",
+						duration: 5000,
+						newWindow: true,
+						close: true,
+						gravity: "bottom",
+						position: "left",
+						stopOnFocus: true,
+						onClick: () => {},
+					}).showToast();
+				};
+			}
+		});
+	}
 });
 
-inputFile.addEventListener('change', (e) => {
-    const file = e.target.files[0] || e.dataTransfer.files[0];
-    const reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = () => {
-        const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
-        const newArray = [
-            ...arrayList,
-            ...JSON.parse(reader.result)
-        ];
-        localStorage.setItem("slyhear-list", JSON.stringify(newArray));
-        showList();
-    };
-    reader.onerror = () => {
-        console.error(reader.error);
-        Toastify({
-            text: "Une erreur s'est produite, veuillez réessayer plutard.",
-            className: "error",
-            duration: 5000,
-            newWindow: true,
-            close: true,
-            gravity: "bottom",
-            position: "left",
-            stopOnFocus: true,
-            onClick: () => {}
-        }).showToast();
-    };
+inputFile.addEventListener("change", (e) => {
+	const file = e.target.files[0] || e.dataTransfer.files[0];
+	const reader = new FileReader();
+	reader.readAsText(file);
+	reader.onload = () => {
+		const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
+		const newArray = [...arrayList, ...JSON.parse(reader.result)];
+		localStorage.setItem("slyhear-list", JSON.stringify(newArray));
+		showList();
+	};
+	reader.onerror = () => {
+		console.error(reader.error);
+		Toastify({
+			text: "Une erreur s'est produite, veuillez réessayer plutard.",
+			className: "error",
+			duration: 5000,
+			newWindow: true,
+			close: true,
+			gravity: "bottom",
+			position: "left",
+			stopOnFocus: true,
+			onClick: () => {},
+		}).showToast();
+	};
 });
 
-document.querySelector('[btn-dl-exemple]').addEventListener('click', () => {
-    const exemple = [
-        {
-            url: "https://www.youtube.com/watch?v=V62xgYWKnJQ",
-            title: "Carpoolboys & Jean Juan - Applause"
-        },
-        {
-            url: "https://www.youtube.com/watch?v=SL_nGCX4SSs",
-            title: "Daft Punk - Television Rules The Nation / Crescendolls (Remake)"
-        }
-    ];
+document.querySelector("[btn-dl-exemple]").addEventListener("click", () => {
+	const exemple = [
+		{
+			url: "https://www.youtube.com/watch?v=V62xgYWKnJQ",
+			title: "Carpoolboys & Jean Juan - Applause",
+		},
+		{
+			url: "https://www.youtube.com/watch?v=SL_nGCX4SSs",
+			title: "Daft Punk - Television Rules The Nation / Crescendolls (Remake)",
+		},
+	];
 
-    const dataStr = `data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(exemple))}`;
-    const downloadLink = document.querySelector('[link-dl-exemple]');
-    downloadLink.setAttribute('href', dataStr);
-    downloadLink.setAttribute('download', 'Slyhear.json');
-    downloadLink.click();
+	const dataStr = `data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(exemple))}`;
+	const downloadLink = document.querySelector("[link-dl-exemple]");
+	downloadLink.setAttribute("href", dataStr);
+	downloadLink.setAttribute("download", "Slyhear.json");
+	downloadLink.click();
 });
-
-
-
-
 
 // Faire une fonction de controle du format du JSON.
