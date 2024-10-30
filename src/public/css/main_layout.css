@@ -5,8 +5,8 @@ body {
 
 #menu {
 	background-color: var(--noir);
-	border-right: 1px solid rgb(47, 44, 44);
-	width: 300px;
+	/* border-right: 1px solid rgb(47, 44, 44); */
+	width: 280px;
 	height: 100vh;
 	overflow: hidden;
 	padding: 20px;
@@ -64,10 +64,10 @@ body {
 
 #menu div {
 	display: flex;
-	border-bottom: 1px solid rgb(47, 44, 44);
+	/* border-bottom: 1px solid rgb(47, 44, 44); */
 	padding-bottom: 20px;
 	align-items: center;
-	gap: 10px;
+	gap: 16px;
 
 	img {
 		height: 40px;
@@ -81,7 +81,7 @@ body {
 section {
 	padding: 20px;
 	height: 100vh;
-	width: calc(100% - 300px);
+	width: calc(100% - 280px);
 
 	h2 {
 		display: flex;

@@ -2,6 +2,7 @@ export const activeMenuBtnAndBreadcrumb = () => {
 	const breadcrumb_map = {
 		home: "Accueil",
 		library: "Bibliothèque",
+		upload: "Déposer",
 		download: "Télécharger",
 	};
 
