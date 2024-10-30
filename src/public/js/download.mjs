@@ -5,9 +5,14 @@ const showList = () => {
 	const ulAllList = document.querySelector("[data-slyher-list]");
 	let content = "";
 
-	for (const link of arrayList) {
-		content += `<li><div><h3>${link.title}</h3><p>${link.url}</p></div><div class="trash-list"><button data-trash="" data-trash-title="${link.title}"><i class="fas fa-times"></i></button></div></li>`;
+	if(arrayList.length) {
+		for (const link of arrayList) {
+			content += `<li><div><h3>${link.title}</h3><p>${link.url}</p></div><div class="trash-list"><button data-trash="" data-trash-title="${link.title}"><i class="fas fa-times"></i></button></div></li>`;
+		}
+	} else {
+		content = '<div class="none-list"><i class="far fa-frown"></i><p>Votre liste est vide</p></div>';
 	}
+
 	ulAllList.innerHTML = content;
 	content = "";
 	allTrashBtn = document.querySelectorAll("[data-trash]");
@@ -27,6 +32,7 @@ const showList = () => {
 
 showList();
 
+// Ajouter à la liste -------------------------------------------------- //
 document.querySelector("[btn-add-list]").addEventListener("click", () => {
 	const url = document.querySelector('[name="url"]');
 	const title = document.querySelector('[name="title"]');
@@ -82,6 +88,7 @@ document.querySelector("[btn-add-list]").addEventListener("click", () => {
 	showList();
 });
 
+// Vider la liste ------------------------------------------------------ //
 document.querySelector("[btn-clear-list]").addEventListener("click", () => {
 	if (window.confirm("Êtes-vous sûre de vouloir vider la liste ?")) {
 		localStorage.setItem("slyhear-list", JSON.stringify([]));
@@ -101,7 +108,7 @@ document.querySelector("[btn-clear-list]").addEventListener("click", () => {
 	}
 });
 
-// DRAG AND DROP FILE =============================================== //
+// DRAG AND DROP FILE ================================================= //
 const inputFile = document.querySelector("[input-dropzone]");
 const fileContainer = document.querySelector("[drag-and-drop-zone]");
 
@@ -117,7 +124,7 @@ fileContainer.addEventListener("drop", (e) => {
 			className: "error",
 			duration: 5000,
 			newWindow: true,
-			close: true,
+			close: false,
 			gravity: "bottom",
 			position: "left",
 			stopOnFocus: true,
@@ -133,6 +140,19 @@ fileContainer.addEventListener("drop", (e) => {
 					const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
 					const newArray = [...arrayList, ...JSON.parse(reader.result)];
 					localStorage.setItem("slyhear-list", JSON.stringify(newArray));
+					Toastify({
+						text: "Importation de la liste avec succès !",
+						className: "success",
+						duration: 5000,
+						newWindow: true,
+						close: false,
+						gravity: "bottom",
+						position: "left",
+						stopOnFocus: true,
+						onClick: () => {},
+					}).showToast();
+
+
 					showList();
 				};
 				reader.onerror = () => {
@@ -142,7 +162,7 @@ fileContainer.addEventListener("drop", (e) => {
 						className: "error",
 						duration: 5000,
 						newWindow: true,
-						close: true,
+						close: false,
 						gravity: "bottom",
 						position: "left",
 						stopOnFocus: true,
@@ -180,6 +200,7 @@ inputFile.addEventListener("change", (e) => {
 	};
 });
 
+// Télécharger exemple de JSON ------------------------------------------- //
 document.querySelector("[btn-dl-exemple]").addEventListener("click", () => {
 	const exemple = [
 		{
@@ -198,5 +219,40 @@ document.querySelector("[btn-dl-exemple]").addEventListener("click", () => {
 	downloadLink.setAttribute("download", "Slyhear.json");
 	downloadLink.click();
 });
-
 // Faire une fonction de controle du format du JSON.
+
+
+
+// CALL AJAX TO DOWNLOAD ======================================================== //
+document.querySelector("[btn-download-list]").addEventListener("click", async() => {
+	const listToDownload = JSON.parse(localStorage.getItem("slyhear-list"));
+
+	if(!listToDownload.length) {
+		Toastify({
+			text: "Votre liste est vide.",
+			className: "error",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "left",
+			stopOnFocus: true,
+			onClick: () => {},
+		}).showToast();
+		return;
+	}
+
+	const call = await fetch("/action/download", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			list: listToDownload
+		})
+	});
+
+	const result = await call.json();
+
+	console.log(result);
+});
