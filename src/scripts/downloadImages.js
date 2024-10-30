@@ -1,20 +1,23 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import fetch from "node-fetch";
 import sharp from "sharp";
 
-const imagesDir = path.join(process.cwd(), "..", "upload", "images");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const urls = [
-	"https://www.youtube.com/watch?v=V62xgYWKnJQ",
-	"https://www.youtube.com/watch?v=SL_nGCX4SSs",
-	"https://www.youtube.com/watch?v=_81rly0kZTQ",
-	"https://www.youtube.com/watch?v=MX8eYdEOU5w",
-];
+const imagesDir = path.join(__dirname, "..", "upload", "images");
+
 
 // Fonction pour télécharger une image à partir de l'URL d'une vidéo YouTube
 async function downloadImage(url) {
 	try {
+		// Vérifier si le dossier existe, sinon le créer
+		if (!fs.existsSync(imagesDir)) {
+			fs.mkdirSync(imagesDir, { recursive: true });
+		}
+
 		const videoId = new URL(url).searchParams.get("v");
 		const imageUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 		const imagePath = path.join(imagesDir, `${videoId}_temp.jpg`);
@@ -45,21 +48,29 @@ async function downloadImage(url) {
 		// Suppression de l'image originale après rognage
 		await fs.promises.unlink(imagePath);
 
-		console.log(`Image téléchargée et rognée : ${croppedImagePath}`);
+		console.log(`Image téléchargée : ${croppedImagePath}`);
+
+		return {
+			name: videoId,
+			filePath: croppedImagePath
+		}
 	} catch (error) {
-		console.error(
-			`Erreur lors du téléchargement de l'image pour ${url}: ${error.message}`,
-		);
+		console.error(`downloadImage ${url}: ${error.message}`);
+		return null
 	}
 }
 
 // Fonction principale pour parcourir la liste des URLs et télécharger les images
-async function downloadImagesFromUrls(urls) {
+export const downloadImagesFromUrls = async (urls) => {
+	const allSoundsImages = []
+
 	for (const url of urls) {
-		await downloadImage(url);
+		const soundImage = await downloadImage(url);
+		allSoundsImages.push(soundImage);
 	}
+
 	console.log("Téléchargement des images terminé.");
+
+	return allSoundsImages;
 }
 
-// Lancement du téléchargement
-downloadImagesFromUrls(urls);
