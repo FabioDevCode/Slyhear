@@ -9,7 +9,11 @@
 		"ignoreUnknown": false,
 		"ignore": [
 			"scripts/*.py",
+			"public/js/*.mjs",
+			"public/js/*.js",
+			"public/css/*.css",
 			"public/plugins/**/*.js",
+			"public/plugins/**/*.mjs",
 			"public/plugins/**/*.css"
 		]
 	},

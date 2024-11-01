@@ -5,6 +5,10 @@
 		"allowNull": false,
 		"primaryKey": true
 	},
+	"videoId": {
+		"type": "STRING",
+		"allowNull": false
+	},
 	"title": {
 		"type": "STRING",
 		"allowNull": false
@@ -14,6 +18,10 @@
 		"allowNull": true
 	},
 	"imagePath": {
+		"type": "STRING",
+		"allowNull": true
+	},
+	"mainColor": {
 		"type": "STRING",
 		"allowNull": true
 	},
