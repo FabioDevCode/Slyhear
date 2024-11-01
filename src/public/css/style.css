@@ -4,6 +4,7 @@
 
 @import url("main_layout.css");
 @import url("download_pages.css");
+@import url("library_pages.css");
 
 .main-btn {
 	cursor: pointer;
@@ -19,6 +20,7 @@
 		rgba(103, 12, 12, 1) 100%
 	);
 	box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px, #670c0c 0 -2px 0 inset;
+	transition: all 300ms ease-in-out;
 
 	&:focus,
 	&:hover {

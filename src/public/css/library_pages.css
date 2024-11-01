@@ -1,0 +1,47 @@
+#main_library {
+    display: flex;
+    flex-direction: column;
+	height: calc(100vh - 92px);
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgb(47, 44, 44);
+	background-color: #1e1e1e;
+	padding: 20px;
+}
+
+#library_sounds {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    overflow: auto;
+
+    li {
+        /* background-color: cornflowerblue; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        min-height: max-content;
+        max-width: calc((100% - 140px) / 8);
+        min-width: 140px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        h2 {
+            /* background-color: crimson; */
+            text-align: center;
+            font-size: 1em;
+            line-height: 1.2em;
+            display: inline-block;
+            width: 100%;
+            word-wrap: break-word;
+            margin-bottom: 0px;
+        }
+    }
+}
+

@@ -1,4 +1,18 @@
+<div id="main_library">
 
-<p>
-    library
-</p>
+    <ul id="library_sounds">
+        {{#each tracks}}
+        <li data-tracks-id="{{this.id}}">
+            {{#if this.image}}
+                <img src="data:image/jpeg;base64,{{this.image}}" alt="{{this.title}}">
+            {{else}}
+                <img src="/img/_default.jpg" alt="Jaquette par défaut Slyhear">
+            {{/if}}
+            <h2>
+                {{this.title}}
+            </h2>
+        </li>
+        {{/each}}
+    </ul>
+
+</div>
