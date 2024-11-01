@@ -21,3 +21,8 @@
 
 - Tag les fichiers mp3 avec la jaquette (pour les lecteurs)
 - Pages téléchargement choisir de télécharger en one-shot (fichier par fichier ou via une liste en local storage cette fois) sans utiliser l'application pour la suite téléchargement classique (faire de vue) avec un bouton pour switch entre les 2.
+
+## Idée de paramètres
+
+- Vider la liste après un téléchargement : Boolean
+- Sélectionner les différents menu disponible : Liste de choix à cocher
