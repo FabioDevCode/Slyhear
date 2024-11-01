@@ -1,25 +1,25 @@
 import { spawn } from "node:child_process";
-import { parseFile } from 'music-metadata';
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { parseFile } from "music-metadata";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const pythonScriptPath = path.resolve(__dirname, "../scripts/downloadSounds.py");
 
-
 export const downloadFromPython = async (urls) => {
 	const pythonProcess = spawn("python3", [pythonScriptPath, ...urls]);
-    let result = "";
+	console.log("Téléchargement des mp3...");
+	let result = "";
 
 	return new Promise((resolve, reject) => {
 		pythonProcess.stdout.on("data", (data) => {
-            const str_out = data.toString();
-            if(str_out.includes('download')) {
-                // console.log(str_out);
-            }
-            result = str_out;
+			const str_out = data.toString();
+			if (str_out.includes("download")) {
+				// console.log(str_out);
+			}
+			result = str_out;
 		});
 
 		pythonProcess.stderr.on("data", (data) => {
@@ -30,7 +30,7 @@ export const downloadFromPython = async (urls) => {
 			if (code === 0) {
 				try {
 					const downloads = JSON.parse(result);
-					resolve(downloads); // Renvoie les URLs téléchargées
+					resolve(downloads.sort((a, b) => a.name.localeCompare(b.name))); // Renvoie les URLs téléchargées
 				} catch (jsonError) {
 					reject(`Erreur de parsing JSON : ${jsonError}`);
 				}
@@ -39,9 +39,9 @@ export const downloadFromPython = async (urls) => {
 			}
 		});
 	});
-}
+};
 
-export const getDurationSounds = async(soundsName) => {
+export const getDurationSounds = async (soundsName) => {
 	try {
 		const results = [];
 
@@ -51,19 +51,48 @@ export const getDurationSounds = async(soundsName) => {
 			const metadata = await parseFile(filePath);
 			const durationInSeconds = metadata.format.duration;
 
-			const minutes = Math.floor(durationInSeconds / 60);
-			const seconds = Math.floor(durationInSeconds % 60);
-			const formattedDuration = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+			// const minutes = Math.floor(durationInSeconds / 60);
+			// const seconds = Math.floor(durationInSeconds % 60);
+			// const formattedDuration = `${minutes}:${seconds.toString().padStart(2, "0")}`;
 
 			results.push({
 				name: sound,
-				duration: formattedDuration,
+				duration: Number.parseInt(durationInSeconds),
 			});
 		}
 
-		return results;
+		return results.sort((a, b) => a.name.localeCompare(b.name));
 	} catch (err) {
 		console.error(`getDurationSounds : ${err}`);
-        return null;
+		return null;
 	}
-}
+};
+
+export const formatedDataForDB = async ({ list, sounds, images }) => {
+	try {
+		const preparedData = [];
+		const duration = await getDurationSounds(list.map((el) => el.name));
+
+		for (let i = 0; i < list.length; i++) {
+			const aggragateObj = {
+				...duration[i],
+				...images[i],
+				...sounds[i],
+				...list[i],
+			};
+			preparedData.push({
+				videoId: aggragateObj.name,
+				title: aggragateObj.title,
+				mp3Path: `${aggragateObj.name}.mp3`,
+				imagePath: `${aggragateObj.name}.jpg`,
+				mainColor: aggragateObj.color.hex,
+				duration: aggragateObj.duration,
+			});
+		}
+
+		return preparedData;
+	} catch (err) {
+		console.error(`formatedDataForDB : ${err}`);
+		return err;
+	}
+};

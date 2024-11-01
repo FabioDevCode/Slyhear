@@ -26,7 +26,7 @@ def download_mp3(url):
             ydl.download([url])
             mp3_file_path = os.path.join(sounds_dir, f'{video_id}.mp3')
             if os.path.exists(mp3_file_path):  # Vérifie si le fichier mp3 existe déjà
-                return {'sounds': video_id, 'status': 'success'}
+                return {'name': video_id, 'status': 'success'}
     except Exception as e:
         return {'url': url, 'status': 'error', 'message': str(e)}
 

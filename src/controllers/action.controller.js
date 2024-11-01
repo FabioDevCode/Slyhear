@@ -1,48 +1,26 @@
-import models from "../models/index.js";
 import {
-    downloadFromPython,
-    getDurationSounds
+	downloadFromPython,
+	formatedDataForDB,
 } from "../helpers/scripts.helpers.js";
+import models from "../models/index.js";
 import { downloadImagesFromUrls } from "../scripts/downloadImages.js";
 
-
 export const goDownload = async (req, res) => {
-    try {
-        const { list } = req.body;
-        const urls = req.body.list.map(el => el.url);
-        const soundsName = urls.map(el => el.split('?v=')[1]);
+	try {
+		const { list } = req.body;
+		const urls = req.body.list.map((el) => el.url);
+		const sounds = await downloadFromPython(urls);
+		const images = await downloadImagesFromUrls(urls);
 
-        console.log("====================================");
+		const preparedData = await formatedDataForDB({ list, sounds, images });
 
-        console.log(list);
-        console.log(urls);
-        console.log(soundsName);
+		await models.Tracks.bulkCreate(preparedData);
 
-        console.log("====================================");
-
-        const pySounds = await downloadFromPython(urls);
-        console.log("pyResult : ", pySounds);
-
-        console.log("====================================");
-
-        const duration = await getDurationSounds(soundsName);
-        console.log("duration : ", duration);
-
-        console.log("====================================");
-
-        const jsImages = await downloadImagesFromUrls(urls);
-        console.log("jsImages : ", jsImages);
-
-        console.log("====================================");
-
-        res.status(200).json({
-            msg: "OK"
-        })
-    } catch (err) {
-        console.error(err);
-        res.status(500).end();
-    }
+		res.status(200).json({
+			msg: "OK",
+		});
+	} catch (err) {
+		console.error(err);
+		res.status(500).end();
+	}
 };
-
-
-

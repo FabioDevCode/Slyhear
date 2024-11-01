@@ -6,14 +6,10 @@ import sharp from "sharp";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const imagesDir = path.join(__dirname, "..", "upload", "images");
 
-
-// Fonction pour télécharger une image à partir de l'URL d'une vidéo YouTube
 async function downloadImage(url) {
 	try {
-		// Vérifier si le dossier existe, sinon le créer
 		if (!fs.existsSync(imagesDir)) {
 			fs.mkdirSync(imagesDir, { recursive: true });
 		}
@@ -47,30 +43,40 @@ async function downloadImage(url) {
 
 		// Suppression de l'image originale après rognage
 		await fs.promises.unlink(imagePath);
-
-		console.log(`Image téléchargée : ${croppedImagePath}`);
+		const { hex, rgb } = await getDominantColor(croppedImagePath);
 
 		return {
 			name: videoId,
-			filePath: croppedImagePath
-		}
+			status: "success",
+			color: {
+				hex,
+				rgb,
+			},
+		};
 	} catch (error) {
 		console.error(`downloadImage ${url}: ${error.message}`);
-		return null
+		return null;
 	}
 }
 
-// Fonction principale pour parcourir la liste des URLs et télécharger les images
+async function getDominantColor(imagePath) {
+	const buffer = await sharp(imagePath).resize(1, 1).raw().toBuffer();
+
+	const [r, g, b] = buffer;
+	const hexColor = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+	const rgbColor = `rgb(${r}, ${g}, ${b})`;
+
+	return { hex: hexColor, rgb: rgbColor };
+}
+
 export const downloadImagesFromUrls = async (urls) => {
-	const allSoundsImages = []
+	const allSoundsImages = [];
+	console.log("Téléchargement des images...");
 
 	for (const url of urls) {
 		const soundImage = await downloadImage(url);
 		allSoundsImages.push(soundImage);
 	}
 
-	console.log("Téléchargement des images terminé.");
-
-	return allSoundsImages;
-}
-
+	return allSoundsImages.sort((a, b) => a.name.localeCompare(b.name));
+};

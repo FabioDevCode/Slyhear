@@ -5,7 +5,7 @@ const showList = () => {
 	const ulAllList = document.querySelector("[data-slyher-list]");
 	let content = "";
 
-	if(arrayList.length) {
+	if (arrayList.length) {
 		for (const link of arrayList) {
 			content += `<li><div><h3>${link.title}</h3><p>${link.url}</p></div><div class="trash-list"><button data-trash="" data-trash-title="${link.title}"><i class="fas fa-times"></i></button></div></li>`;
 		}
@@ -152,7 +152,6 @@ fileContainer.addEventListener("drop", (e) => {
 						onClick: () => {},
 					}).showToast();
 
-
 					showList();
 				};
 				reader.onerror = () => {
@@ -219,15 +218,12 @@ document.querySelector("[btn-dl-exemple]").addEventListener("click", () => {
 	downloadLink.setAttribute("download", "Slyhear.json");
 	downloadLink.click();
 });
-// Faire une fonction de controle du format du JSON.
-
-
 
 // CALL AJAX TO DOWNLOAD ======================================================== //
-document.querySelector("[btn-download-list]").addEventListener("click", async() => {
+document.querySelector("[btn-download-list]").addEventListener("click", async () => {
 	const listToDownload = JSON.parse(localStorage.getItem("slyhear-list"));
 
-	if(!listToDownload.length) {
+	if (!listToDownload.length) {
 		Toastify({
 			text: "Votre liste est vide.",
 			className: "error",
@@ -248,8 +244,13 @@ document.querySelector("[btn-download-list]").addEventListener("click", async() 
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			list: listToDownload
-		})
+			list: listToDownload.map((el) => {
+				return {
+					...el,
+					name: el.url.split("?v=")[1],
+				};
+			}).sort((a, b) => a.name.localeCompare(b.name)),
+		}),
 	});
 
 	const result = await call.json();
