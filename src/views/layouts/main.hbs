@@ -14,39 +14,41 @@
 
         <nav>
             <ul>
-                <li id="home" data-nav="nav-btn">
-                    <a href="/home">
-                        <i class="fas fa-home"></i>
+                <li id="player" data-nav="nav-btn">
+                    <a href="/player">
+                        <i class="fas fa-compact-disc"></i>
                         <p>
-                            Accueil
+                            Lecteur
                         </p>
                     </a>
                 </li>
                 <li id="library" data-nav="nav-btn">
                     <a href="/library">
-                        <i class="fas fa-folder"></i>
+                        <i class="fas fa-layer-group"></i>
                         <p>
                             Bibliothèque
                         </p>
                     </a>
                 </li>
-                <li id="playlists" data-nav="nav-btn">
+
+                {{!-- <li id="playlists" data-nav="nav-btn">
                     <a href="">
                         <i class="fas fa-stream"></i>
                         <p>
                             Liste de lecture
                         </p>
-
                     </a>
-                </li>
-                <li id="upload" data-nav="nav-btn">
+                </li> --}}
+
+                {{!-- <li id="upload" data-nav="nav-btn">
                     <a href="/upload">
                         <i class="fas fa-file-import"></i>
                         <p>
                             Déposer
                         </p>
                     </a>
-                </li>
+                </li> --}}
+
                 <li id="download" data-nav="nav-btn">
                     <a href="/download">
                         <i class="fas fa-download"></i>
@@ -68,9 +70,7 @@
     </div>
 
     <section>
-        <h2 id="breadcrumb">
-            Bienvenu !
-        </h2>
+        <h2 id="breadcrumb"></h2>
         <main>
             {{{body}}}
         </main>

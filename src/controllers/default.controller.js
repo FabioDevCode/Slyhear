@@ -2,18 +2,19 @@ import { preparedTracksToShow } from "../helpers/tracks.helpers.js";
 import models from "../models/index.js";
 
 export const index = (req, res) => {
-	res.redirect("/home");
+	res.redirect("/player");
 };
 
-export const home = (req, res) => {
+export const player = (req, res) => {
 	res.render("index");
 };
 
 export const library = async (req, res) => {
 	try {
 		const allTracks = await models.Tracks.findAll({
-			attributes: ["id", "title", "imagePath"],
 			raw: true,
+			attributes: ["id", "title", "imagePath"],
+			order: [["title", "ASC"]]
 		});
 
 		const tracks = await preparedTracksToShow(allTracks);
