@@ -17,10 +17,10 @@ export const goDownload = async (req, res) => {
 		await models.Tracks.bulkCreate(preparedData);
 
 		res.status(200).json({
-			msg: "OK",
+			ok: true
 		});
 	} catch (err) {
 		console.error(err);
-		res.status(500).end();
+		res.status(200).json({});
 	}
 };

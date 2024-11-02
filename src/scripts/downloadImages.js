@@ -7,6 +7,36 @@ import sharp from "sharp";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const imagesDir = path.join(__dirname, "..", "upload", "images");
+const defaultImage = path.join(imagesDir, "_default.jpg");
+
+
+async function fetchImage(videoId) {
+	const imageUrls = [
+		`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+        `https://img.youtube.com/vi/${videoId}/sddefault.jpg`,
+        `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+	];
+
+	for (const url of imageUrls) {
+		try {
+			const response = await fetch(url);
+			if (response.ok) {
+				const arrayBuffer = await response.arrayBuffer();
+				return {
+					dl: true,
+					arrayBuffer
+				};
+			}
+		} catch (err) {
+			console.error(`Erreur téléchargement image : ${url.split('/').pop()}`);
+		}
+	}
+
+	return {
+		dl: false,
+		arrayBuffer: null
+	}
+}
 
 async function downloadImage(url) {
 	try {
@@ -15,39 +45,35 @@ async function downloadImage(url) {
 		}
 
 		const videoId = new URL(url).searchParams.get("v");
-		const imageUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 		const imagePath = path.join(imagesDir, `${videoId}_temp.jpg`);
 		const croppedImagePath = path.join(imagesDir, `${videoId}.jpg`);
 
-		const response = await fetch(imageUrl);
-		if (!response.ok) {
-			throw new Error(
-				`Erreur lors du téléchargement de l'image : ${response.statusText}`,
-			);
+		const objResponse = await fetchImage(videoId);
+		const status = objResponse?.dl ? "success" : "error";
+		const pathToGetColors = objResponse?.dl ? croppedImagePath : defaultImage;
+
+		if(objResponse?.dl) {
+			const buffer = Buffer.from(objResponse.arrayBuffer);
+			fs.writeFileSync(imagePath, buffer);
+			// Rognage de l'image pour qu'elle soit carrée
+			await sharp(imagePath)
+				.resize({
+					width: 800,
+					height: 800,
+					fit: sharp.fit.cover,
+					position: sharp.strategy.center,
+				})
+				.toFile(croppedImagePath);
+
+			// Suppression de l'image originale après rognage
+			await fs.promises.unlink(imagePath);
 		}
 
-		const arrayBuffer = await response.arrayBuffer();
-		const buffer = Buffer.from(arrayBuffer);
-
-		fs.writeFileSync(imagePath, buffer);
-
-		// Rognage de l'image pour qu'elle soit carrée
-		await sharp(imagePath)
-			.resize({
-				width: 800,
-				height: 800,
-				fit: sharp.fit.cover,
-				position: sharp.strategy.center,
-			})
-			.toFile(croppedImagePath);
-
-		// Suppression de l'image originale après rognage
-		await fs.promises.unlink(imagePath);
-		const { hex, rgb } = await getDominantColor(croppedImagePath);
+		const { hex, rgb } = await getDominantColor(pathToGetColors);
 
 		return {
 			name: videoId,
-			status: "success",
+			status,
 			color: {
 				hex,
 				rgb,

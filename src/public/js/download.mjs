@@ -253,7 +253,34 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 		}),
 	});
 
-	const result = await call.json();
+	const response = await call.json();
 
-	console.log(result);
+	if (!response?.ok) {
+		Toastify({
+			text: "Une erreur s'est produite lors du téléchargement.",
+			className: "error",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "left",
+			stopOnFocus: true,
+			onClick: () => {},
+		}).showToast();
+		return;
+	} else {
+		localStorage.setItem("slyhear-list", JSON.stringify([]));
+		Toastify({
+			text: "Le téléchargement est un succès !",
+			className: "success",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "left",
+			stopOnFocus: true,
+			onClick: () => {},
+		}).showToast();
+		showList();
+	}
 });
