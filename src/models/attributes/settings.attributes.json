@@ -1,0 +1,18 @@
+{
+    "param": {
+		"type": "STRING",
+		"allowNull": false
+	},
+    "boolean": {
+		"type": "BOOLEAN",
+		"allowNull": true
+	},
+    "value": {
+		"type": "STRING",
+		"allowNull": true
+	},
+    "number": {
+		"type": "INTEGER",
+		"allowNull": true
+	}
+}

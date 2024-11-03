@@ -78,7 +78,7 @@
 
 		li {
 			overflow: hidden;
-			height: 60px;
+			height: 64px;
 			border-radius: 6px;
 			font-size: .9em;
 			width: calc(50% - 5px);
@@ -87,6 +87,7 @@
 			align-items: center;
 			justify-content: space-between;
 			padding: 4px;
+			line-height: 1.2em;
 
 			div {
 				display: flex;
