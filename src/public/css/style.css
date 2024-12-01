@@ -5,6 +5,7 @@
 @import url("main_layout.css");
 @import url("download_pages.css");
 @import url("library_pages.css");
+@import url("player_pages.css");
 
 .main-btn {
 	cursor: pointer;
@@ -65,6 +66,6 @@
 }
 
 ::selection {
-    background-color: #670c0c;
-    color: white;
+    background-color: transparent;
+    color: transparent;
 }

@@ -29,8 +29,10 @@ export const preparedTracksToShow = async (arrayTracks) => {
 				}
 
 				return {
-					id: track.id,
-					title: track.title,
+					id: track?.id,
+					title: track?.title,
+					songId: track?.videoId,
+					color: track?.mainColor,
 					image: imageBuffer ? imageBuffer.toString("base64") : null,
 				};
 			}),

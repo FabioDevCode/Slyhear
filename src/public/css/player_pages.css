@@ -1,0 +1,81 @@
+#player-bloc {
+	position: relative;
+	display: flex;
+    justify-content: space-between;
+	height: calc(100vh - 92px);
+	gap: 20px;
+	border-radius: 10px;
+	border: 1px solid rgb(47, 44, 44);
+	background-color: #1e1e1e;
+	padding: 20px;
+}
+
+.player {
+    text-align: center;
+    border-radius: 4px;
+}
+
+.controls {
+    display: flex;
+}
+
+.controls button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white !important;
+}
+
+.progress input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+#list-player {
+    height: 100%;
+    width: 450px;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    ul {
+        height: auto;
+        min-height: max-content;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 100%;
+
+
+        li {
+            cursor: pointer;
+        	background-color: #252525;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 60px;
+            width: 100%;
+            overflow: hidden;
+            padding: 0 12px;
+            border-radius: 4px;
+
+            img {
+                height: 36px;
+            }
+
+            p {
+                line-height: 20px;
+            }
+
+            &:hover {
+                background: linear-gradient(to right, #252525, var(--trackOver));
+                border: 1px solid var(--trackOver);
+            }
+        }
+    }
+}
