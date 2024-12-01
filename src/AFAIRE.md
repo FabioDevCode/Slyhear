@@ -27,3 +27,8 @@
 
 - Vider la liste après un téléchargement : Boolean
 - Sélectionner les différents menu disponible : Liste de choix à cocher
+
+## Commande Docker :
+
+docker build -t slyhear .
+docker run -p 3324:3324 slyhear

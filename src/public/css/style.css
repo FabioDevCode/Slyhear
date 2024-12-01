@@ -36,3 +36,35 @@
 		box-shadow: rgba(0, 0, 0, 0.3) 0 2px 4px, #670c0c 0 -2px 0 inset;
 	}
 }
+
+* {
+    scrollbar-width: none;
+	-ms-overflow-style: none;
+    /* scrollbar-color: rgb(30, 30, 30) rgb(255, 255, 255, .1); */
+    scrollbar-color: #C71A1A rgb(255, 255, 255, .1);
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+	display: none;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, .1);
+}
+
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(30, 30, 30);
+    background-color: #670c0c;
+}
+
+::selection {
+    background-color: #670c0c;
+    color: white;
+}
