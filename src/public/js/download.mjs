@@ -221,6 +221,7 @@ document.querySelector("[btn-dl-exemple]").addEventListener("click", () => {
 
 // CALL AJAX TO DOWNLOAD ======================================================== //
 document.querySelector("[btn-download-list]").addEventListener("click", async () => {
+	document.querySelector("#main_download");
 	const listToDownload = JSON.parse(localStorage.getItem("slyhear-list"));
 
 	if (!listToDownload.length) {
@@ -238,6 +239,9 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 		return;
 	}
 
+	document.querySelector("#downloader-loader").classList.add("loader");
+	document.querySelector("#downloader").classList.remove("none");
+
 	const call = await fetch("/action/download", {
 		method: "POST",
 		headers: {
@@ -254,6 +258,10 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 	});
 
 	const response = await call.json();
+
+	document.querySelector("#downloader").classList.add("none");
+	document.querySelector("#downloader-loader").classList.remove("loader");
+
 
 	if (!response?.ok) {
 		Toastify({
