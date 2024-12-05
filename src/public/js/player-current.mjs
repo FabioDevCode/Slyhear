@@ -1,4 +1,4 @@
-document.querySelectorAll('.track-player').forEach(track => {
+document.querySelectorAll('.track').forEach(track => {
     track.addEventListener('mouseover', function() {
         const color = this.getAttribute('track-color');
         document.documentElement.style.setProperty('--trackOver', color);

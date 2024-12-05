@@ -47,7 +47,7 @@
     <div id="list-player">
         <ul>
             {{#each tracks}}
-                <li class="track-player" track-id="{{id}}" song-id="{{songId}}" track-color="{{color}}">
+                <li class="track" track-id="{{id}}" song-id="{{songId}}" track-color="{{color}}" track-title="{{title}}">
                     {{#if this.image}}
                         <img src="data:image/jpeg;base64,{{this.image}}" alt="Jaquette de {{this.title}}">
                     {{else}}

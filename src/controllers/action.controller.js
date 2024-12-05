@@ -31,7 +31,6 @@ export const goDownload = async (req, res) => {
 	}
 };
 
-
 export const getTrackData = async(req, res) => {
 	try {
 		const { track } = req.params;
@@ -47,3 +46,16 @@ export const getTrackData = async(req, res) => {
 		res.status(200).json({});
 	}
 }
+
+export const getAjaxTrackBuffer = async(req, res) => {
+	try {
+
+
+		res.status(200).json({
+			msg: "OK"
+		})
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({})
+	}
+};

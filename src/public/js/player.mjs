@@ -4,6 +4,26 @@ const playingtrack = '';
 
 
 
+document.querySelectorAll('.track').forEach(track => {
+    track.addEventListener('click', function() {
+        const title = this.getAttribute('track-title');
+
+        console.log(title);
+
+    })
+
+
+
+
+});
+
+
+
+
+
+
+
+
 
 
 
