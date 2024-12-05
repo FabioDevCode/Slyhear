@@ -5,6 +5,7 @@
 node_modules
 node_modules/*
 package-lock.json
+src/public/audio/*
 src/config/database.js
 src/database/db.sqlite
 src/config/env.json
