@@ -31,31 +31,55 @@ export const goDownload = async (req, res) => {
 	}
 };
 
-export const getTrackData = async(req, res) => {
+export const setStream = async(req, res) => {
 	try {
-		const { track } = req.params;
+		const { code } = req.params;
+		const filePath = path.join(trackDir, `${code}.mp3`);
 
-		const filePath = path.join(trackDir, `${track}.mp3`);
-		if(!fs.existsSync(filePath)) {
-			throw "Audio introuvalbe"
+		if (!fs.existsSync(filePath)) {
+			return res.status(404).json({ error: 'Fichier introuvable' });
 		}
 
-		res.sendFile(filePath);
+		const stat = fs.statSync(filePath);
+		const fileSize = stat.size;
+		const range = req.headers.range;
+
+		if (!range) {
+			// Si pas de range, envoyer le fichier entier
+			res.writeHead(200, {
+				'Content-Type': 'audio/mpeg',
+				'Content-Length': fileSize,
+				'Accept-Ranges': 'bytes',
+			});
+			fs.createReadStream(filePath).pipe(res);
+		} else {
+			// Si range est demandé, gérer la requête partielle
+			const parts = range.replace(/bytes=/, '').split('-');
+			const start = Number.parseInt(parts[0], 10);
+			const end = parts[1] ? Number.parseInt(parts[1], 10) : fileSize - 1;
+
+			// Vérifier la validité des indices
+			if (start >= fileSize || end >= fileSize) {
+				return res.status(416).send('Requested range not satisfiable');
+			}
+
+			const chunkSize = end - start + 1;
+			const readStream = fs.createReadStream(filePath, { start, end });
+
+			res.writeHead(206, {
+				'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+				'Content-Length': chunkSize,
+				'Content-Type': 'audio/mpeg',
+				'Accept-Ranges': 'bytes',
+			});
+
+			// Envoyer le flux de données partiel
+			readStream.pipe(res);
+		}
 	} catch (err) {
 		console.error(err);
-		res.status(200).json({});
-	}
-}
-
-export const getAjaxTrackBuffer = async(req, res) => {
-	try {
-
-
-		res.status(200).json({
-			msg: "OK"
-		})
-	} catch (err) {
-		console.error(err);
-		res.status(500).json({})
+		res.status(500).json({
+			error: err
+		});
 	}
 };

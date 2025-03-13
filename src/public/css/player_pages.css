@@ -2,21 +2,60 @@
 	position: relative;
 	display: flex;
     justify-content: space-between;
-	height: calc(100vh - 92px);
+    height: 100%;
 	gap: 20px;
 	border-radius: 10px;
-	border: 1px solid rgb(47, 44, 44);
 	background-color: #1e1e1e;
 	padding: 20px;
+    overflow: hidden;
+    border: 1px solid transparent;
+}
+
+#img-container {
+    position: absolute;
+    bottom: 0px;
+    height: 100%;
+}
+
+#main_img {
+    height: 540px;
+    width: 540px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.progress {
+    margin-bottom: 16px;
+}
+
+#control_img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#player_img {
+    filter: blur(100px);
 }
 
 .player {
+    position: relative;
+    width: calc(100% - 500px);
+    z-index: 10;
     text-align: center;
     border-radius: 4px;
 }
 
 .controls {
+    z-index: 100;
     display: flex;
+    justify-content: center;
 }
 
 .controls button {
@@ -31,12 +70,13 @@
 }
 
 .progress input[type="range"] {
+    cursor: pointer;
     width: 100%;
     margin-top: 10px;
 }
 
-
 #list-player {
+    z-index: 1000;
     height: 100%;
     width: 500px;
     overflow: auto;
@@ -50,7 +90,7 @@
         flex-direction: column;
         gap: 4px;
         width: 100%;
-        padding: 10px;
+        padding: 6px;
 
         li {
             cursor: pointer;
@@ -73,10 +113,16 @@
                 line-height: 20px;
             }
 
+            &.active {
+                background: linear-gradient(to right, #252525 25%, var(--i) 100%);
+                border: 1px solid var(--i);
+                box-shadow: rgba(190, 194, 197, 0.3) 0px 0px 3px 0px, rgba(190, 194, 197, 0.15) 0px 0px 2px 0px;
+            }
+
             &:hover {
-                background: linear-gradient(to right, #252525 25%, var(--trackOver) 100%);
-                border: 1px solid var(--trackOver);
-                box-shadow: rgba(190, 194, 197, 0.3) 0px 0px 3px 0px, rgba(190, 194, 197, 0.15) 0px 0px 4px 0px;
+                background: linear-gradient(to right, #252525 25%, var(--i) 100%);
+                border: 1px solid var(--i);
+                box-shadow: rgba(190, 194, 197, 0.3) 0px 0px 3px 0px, rgba(190, 194, 197, 0.15) 0px 0px 2px 0px;
             }
         }
     }
