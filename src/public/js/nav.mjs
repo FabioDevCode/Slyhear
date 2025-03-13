@@ -13,5 +13,5 @@ export const activeMenuBtnAndBreadcrumb = () => {
 
 	const firtPath = window.location.pathname.split("/")[1];
 	document.querySelector(`#${firtPath}`).classList.add("active");
-	document.getElementById("breadcrumb").innerHTML = breadcrumb_map[firtPath];
+	// document.getElementById("breadcrumb").innerHTML = breadcrumb_map[firtPath];
 };

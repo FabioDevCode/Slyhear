@@ -1,7 +1,7 @@
 #main_download {
 	position: relative;
 	display: flex;
-	height: calc(100vh - 92px);
+	height: 100%;
 	gap: 20px;
 	border-radius: 10px;
 	border: 1px solid rgb(47, 44, 44);

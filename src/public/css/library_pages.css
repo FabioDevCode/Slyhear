@@ -1,7 +1,7 @@
 #main_library {
     display: flex;
     flex-direction: column;
-	height: calc(100vh - 92px);
+	height: 100%;
     overflow: hidden;
     border-radius: 10px;
     border: 1px solid rgb(47, 44, 44);
