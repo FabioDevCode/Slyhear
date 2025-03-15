@@ -34,6 +34,7 @@ export const preparedTracksToShow = async (arrayTracks) => {
 					songId: track?.videoId,
 					color: track?.mainColor,
 					image: imageBuffer ? imageBuffer.toString("base64") : null,
+					duration: track?.duration
 				};
 			}),
 		);

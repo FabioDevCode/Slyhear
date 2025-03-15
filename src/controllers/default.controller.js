@@ -9,7 +9,7 @@ export const player = async(req, res) => {
 	try {
 		const allTracks = await models.Tracks.findAll({
 			raw: true,
-			attributes: ["id", "videoId", "title", "imagePath", "mainColor"],
+			attributes: ["id", "videoId", "title", "imagePath", "mainColor", "duration"],
 			order: [["title", "ASC"]]
 		});
 

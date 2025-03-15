@@ -224,6 +224,7 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 	document.querySelector("#main_download");
 	const listToDownload = JSON.parse(localStorage.getItem("slyhear-list"));
 
+
 	if (!listToDownload.length) {
 		Toastify({
 			text: "Votre liste est vide.",
@@ -251,7 +252,7 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 			list: listToDownload.map((el) => {
 				return {
 					...el,
-					name: el.url.split("?v=")[1],
+					name: el.url?.split("?v=")[1]?.split('&')[0] || "",
 				};
 			}).sort((a, b) => a.name.localeCompare(b.name)),
 		}),
@@ -277,7 +278,7 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 		}).showToast();
 		return;
 	} else {
-		localStorage.setItem("slyhear-list", JSON.stringify([]));
+		// localStorage.setItem("slyhear-list", JSON.stringify([]));
 		Toastify({
 			text: "Le téléchargement est un succès !",
 			className: "success",

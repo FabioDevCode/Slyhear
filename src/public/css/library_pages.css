@@ -3,8 +3,6 @@
     flex-direction: column;
 	height: 100%;
     overflow: hidden;
-    border-radius: 10px;
-    border: 1px solid rgb(47, 44, 44);
 	background-color: #1e1e1e;
 	padding: 20px;
 }

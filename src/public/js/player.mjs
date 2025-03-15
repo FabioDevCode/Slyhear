@@ -6,6 +6,56 @@ const stopButton = document.getElementById('stop');
 const prevButton = document.getElementById('prev');
 const nextButton = document.getElementById('next');
 const progressBar = document.getElementById('progress-bar');
+const progressTime = document.getElementById("progress-time");
+const progressDuration = document.getElementById("progress-duration");
+const seekAmount = 5; // Nombre de secondes à avancer/reculer
+
+let random = false;
+
+document.querySelectorAll(".order-play").forEach(btn => {
+    btn.addEventListener("click", function() {
+        document.querySelectorAll(".order-play").forEach(b => b.classList.remove("active"))
+        this.classList.add("active");
+    })
+});
+
+document.querySelector("#random").addEventListener("click", () => {
+    random = true;
+});
+
+document.querySelector("#boucle").addEventListener("click", () => {
+    random = false;
+});
+
+function clickOnPlay() {
+    playButton.classList.add("none");
+    pauseButton.classList.remove("none");
+};
+
+function clickOnPause() {
+    pauseButton.classList.add("none");
+    playButton.classList.remove("none");
+};
+
+function formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+    if (hours > 0) {
+        return `${hours}:${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    } else {
+        return `${minutes}:${secs.toString().padStart(2, "0")}`;
+    }
+};
+
+function getContrastColor(hex) {
+    hex = hex.replace(/^#/, '');
+    let r = parseInt(hex.substr(0, 2), 16);
+    let g = parseInt(hex.substr(2, 2), 16);
+    let b = parseInt(hex.substr(4, 2), 16);
+    let brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 128 ? '#101010' : '#F1F1F1';
+};
 
 // Tableau des chansons
 const songs = Array.from(document.querySelectorAll('.track')).map(track => track.getAttribute('song-id'));
@@ -19,8 +69,13 @@ const onSongIndexChange = (newIndex) => {
     const currentPlayedSong = document.querySelector(`[song-id="${songs[newIndex]}"]`);
     const currentImgSong = currentPlayedSong.querySelector('img');
 
-    document.querySelector("#player_img").setAttribute("src", currentImgSong.getAttribute('src'));
+    document.querySelector("#main_bloc").removeAttribute("style");
+    document.querySelector("#main_bloc").setAttribute("style", `background-image: url('${currentImgSong.getAttribute('src')}')`);
     document.querySelector("#main_img").setAttribute("src", currentImgSong.getAttribute('src'));
+    document.querySelector("#name_sound").removeAttribute("style");
+    document.querySelector("#name_sound").setAttribute("style", `--color: ${getContrastColor(currentPlayedSong.getAttribute('track-color'))}`);
+    document.querySelector("#name_sound").textContent = currentPlayedSong.getAttribute('track-title');
+
     currentPlayedSong.classList.add('active');
     currentPlayedSong.scrollIntoView({
         behavior: "smooth",
@@ -41,10 +96,7 @@ Object.defineProperty(window, 'currentSongIndex', {
     }
 });
 
-const currentPlayedSong = document.querySelector(`[song-id="${songs[currentSongIndex]}"]`);
-const currentImgSong = currentPlayedSong.querySelector('img');
-document.querySelector("#player_img").setAttribute("src", currentImgSong.getAttribute('src'));
-document.querySelector("#main_img").setAttribute("src", currentImgSong.getAttribute('src'));
+onSongIndexChange(currentSongIndex);
 
 let audioSource = null; // Permet de gérer le flux
 
@@ -71,44 +123,63 @@ loadSong(songs[currentSongIndex]);
 
 // Écouteurs d'événements pour les boutons de contrôle
 playButton.addEventListener('click', () => {
+    clickOnPlay();
     audio.play();
 });
 
 pauseButton.addEventListener('click', () => {
+    clickOnPause();
     audio.pause();
 });
 
-stopButton.addEventListener('click', () => {
+stopButton?.addEventListener('click', () => {
+    clickOnPause();
     audio.pause();
     audio.currentTime = 0;
 });
 
 prevButton.addEventListener('click', () => {
-    const newIndex = Number.parseInt(currentSongIndex) - 1;
-    if(newIndex < 0) {
-        currentSongIndex = songs.length - 1;
+    if(!random) {
+        const newIndex = Number.parseInt(currentSongIndex) - 1;
+        if(newIndex < 0) {
+            currentSongIndex = songs.length - 1;
+        } else {
+            currentSongIndex = newIndex
+        }
     } else {
-        currentSongIndex = newIndex
+        // Cas avec random : on sélectionne un index aléatoire
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * songs.length);
+        } while (newIndex === currentSongIndex);
+        currentSongIndex = newIndex;
     }
+
     loadSong(songs[currentSongIndex]);
+    clickOnPlay();
     audio.play();
 });
 
 nextButton.addEventListener('click', () => {
-    const newIndex = Number.parseInt(currentSongIndex) + 1;
-    if(newIndex > songs.length - 1) {
-        currentSongIndex = 0;
+    if(!random) {
+        const newIndex = Number.parseInt(currentSongIndex) + 1;
+        if(newIndex > songs.length - 1) {
+            currentSongIndex = 0;
+        } else {
+            currentSongIndex = newIndex;
+        };
     } else {
+        // Cas avec random : on sélectionne un index aléatoire
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * songs.length);
+        } while (newIndex === currentSongIndex);
         currentSongIndex = newIndex;
-    };
+    }
 
     loadSong(songs[currentSongIndex]);
+    clickOnPlay();
     audio.play();
-});
-
-// Mise à jour de la barre de progression
-audio.addEventListener('timeupdate', () => {
-    progressBar.value = (audio.currentTime / audio.duration) * 100 || 0;
 });
 
 // Permettre de changer la progression via la barre
@@ -118,10 +189,28 @@ progressBar.addEventListener('input', () => {
 
 // Ajouter un événement pour changer de chanson à la fin du morceau
 audio.addEventListener('ended', () => {
-    // Incrémenter l'index de la chanson actuelle et jouer la suivante
-    currentSongIndex = (Number.parseInt(currentSongIndex) + 1) % songs.length;
+    if(!random) {
+        currentSongIndex = (Number.parseInt(currentSongIndex) + 1) % songs.length;
+    } else {
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * songs.length);
+        } while (newIndex === currentSongIndex);
+        currentSongIndex = newIndex;
+    }
+
     loadSong(songs[currentSongIndex]);
-    audio.play();  // Jouer automatiquement la chanson suivante
+    audio.play();
+});
+
+audio.addEventListener("loadedmetadata", () => {
+    progressDuration.textContent = formatTime(audio.duration);
+});
+
+// Mise à jour de la barre de progression
+audio.addEventListener('timeupdate', () => {
+    progressBar.value = (audio.currentTime / audio.duration) * 100 || 0;
+    progressTime.textContent = formatTime(audio.currentTime);
 });
 
 // CLAVIER MAPPING ============================================================= //
@@ -130,26 +219,75 @@ document.addEventListener('keydown', (event) => {
         case 'Space': // Lecture / Pause
             event.preventDefault(); // Empêche le scroll vers le bas
             if (audio.paused) {
+                clickOnPlay();
                 audio.play();
             } else {
+                clickOnPause();
                 audio.pause();
             }
             break;
-        case 'KeyS': // Stop
+        case 'KeyS':
+            clickOnPause();
             audio.pause();
             audio.currentTime = 0;
             break;
-        case 'ArrowLeft': // Précédent
+        case 'ArrowLeft':
+            audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
+            break;
+        case 'ArrowRight':
+            audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
+            break;
+        case 'ArrowUp':
             prevButton.click();
             break;
-        case 'ArrowRight': // Suivant
+        case 'ArrowDown':
             nextButton.click();
-            break;
-        case 'ArrowUp': // Avancer dans la musique
-            audio.currentTime = Math.min(audio.currentTime + 10, audio.duration); // Avance de 5s
-            break;
-        case 'ArrowDown': // Reculer dans la musique
-            audio.currentTime = Math.max(audio.currentTime - 10, 0); // Recule de 5s
             break;
     }
 });
+
+let lastScrollTime = 0;
+const scrollCooldown = 400;
+let userInteracted = false;
+
+function enableScrollInteraction() {
+    if (!userInteracted) {
+        userInteracted = true;
+        document.addEventListener("wheel", handleScroll);
+        // On enlève les écouteurs d'activation pour éviter plusieurs appels
+        document.removeEventListener("click", enableScrollInteraction);
+        document.removeEventListener("keydown", enableScrollInteraction);
+    }
+}
+
+// Activer l'interaction au premier clic ou touche clavier
+document.addEventListener("click", enableScrollInteraction);
+document.addEventListener("keydown", enableScrollInteraction);
+
+function handleScroll(event) {
+    const now = Date.now();
+    if (now - lastScrollTime < scrollCooldown) return; // Anti-spam du scroll
+    lastScrollTime = now;
+
+    // Scroll vertical (molette haut/bas) pour changer de musique
+    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+        if (event.deltaY > 0) {
+            nextButton.click(); // Changer la chanson vers la suivante
+        } else if (event.deltaY < 0) {
+            prevButton.click(); // Changer la chanson vers la précédente
+        }
+        // Si la musique est en pause, on la met en lecture
+        if (audio.paused) {
+            audio.play().catch(error => console.warn("Lecture bloquée :", error));
+        }
+    } else {
+        // Scroll horizontal (molette gauche/droite) pour avancer/reculer dans l'audio
+        if (event.deltaX > 0) {
+            // Scroll vers la gauche -> Reculer dans la musique
+            audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
+        } else {
+            // Scroll vers la droite -> Avancer dans la musique
+            audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
+        }
+    }
+}

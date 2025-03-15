@@ -1,67 +1,105 @@
 <div id="player-bloc">
-    <div class="player">
-        <div id="img-container">
-            <img id="player_img" src="/img/_default.jpg" alt="jaquette de musique">
-
-            <div id="control_img">
-                <img id="main_img" src="/img/_default.jpg" alt="jaquette">
-                <div id="control_lecteur">
-                    <audio id="audio" src=""></audio>
-                    <div class="progress">
-                        <input type="range" id="progress-bar" value="0" max="100">
-                    </div>
-                    <div class="controls">
-                        <button id="prev" class="main-btn">
-                            <i class="fas fa-step-backward"></i>
-                            <p>
-                                Précédent
-                            </p>
-                        </button>
-                        <button id="play" class="main-btn">
-                            <i class="fas fa-play"></i>
-                            <p>
-                                Play
-                            </p>
-                        </button>
-                        <button id="pause" class="main-btn">
-                            <i class="fas fa-pause"></i>
-                            <p>
-                                Pause
-                            </p>
-                        </button>
-                        <button id="stop" class="main-btn">
-                            <i class="fas fa-stop"></i>
-                            <p>
-                                Stop
-                            </p>
-                        </button>
-                        <button id="next" class="main-btn">
-                            <i class="fas fa-step-forward"></i>
-                            <p>
-                                Suivant
-                            </p>
-                        </button>
-                    </div>
-                </div>
+    <div id="main_bloc" style="background-image: url('/img/_default.jpg');">
+        <div id="left_bloc">
+            <div id="nav_top">
+                <button>
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h3 id="name_nav_top">
+                    Bibliothèque
+                </h3>
             </div>
+
+            <div id="left_content">
+                <img id="main_img" src="/img/_default.jpg" alt="jaquette">
+                <h3 id="name_sound">
+                    {{!-- Titre --}}
+                </h3>
+            </div>
+        </div>
+
+        <div id="list-player">
+            <ul>
+                {{#each tracks}}
+                    <li class="track {{#if @first}}active{{/if}}" index="{{@index}}" track-id="{{id}}" song-id="{{songId}}" track-duration="{{duration}}" style="--i: {{color}};" track-color="{{color}}" track-title="{{title}}">
+                        {{#if this.image}}
+                            <img src="data:image/jpeg;base64,{{this.image}}" alt="Jaquette de {{this.title}}">
+                        {{else}}
+                            <img src="/img/_default.jpg" alt="Jaquette par défaut Slyhear">
+                        {{/if}}
+                        <p>
+                            {{title}}
+                        </p>
+                    </li>
+                {{/each}}
+            </ul>
         </div>
     </div>
 
-    <div id="list-player">
-        <ul>
-            {{#each tracks}}
-                <li class="track {{#if @first}}active{{/if}}" index="{{@index}}" track-id="{{id}}" song-id="{{songId}}" style="--i: {{color}};" track-color="{{color}}" track-title="{{title}}">
-                    {{#if this.image}}
-                        <img src="data:image/jpeg;base64,{{this.image}}" alt="Jaquette de {{this.title}}">
-                    {{else}}
-                        <img src="/img/_default.jpg" alt="Jaquette par défaut Slyhear">
-                    {{/if}}
+    <div id="controls_player">
+        <div id="controls">
+            <audio id="audio" src=""></audio>
+            <div class="controls">
+                <button id="random" class="order-play">
+                    <i class="fas fa-random"></i>
                     <p>
-                        {{title}}
+                        Aléatoire
                     </p>
-                </li>
-            {{/each}}
-        </ul>
+                </button>
+                <button id="prev" class="player-btn md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="729" height="717" viewBox="0 0 729 717" fill="none">
+                        <path d="M233.708 16.2136C245.891 3.14924 264.118 -2.42334 281.523 1.59502L595.529 74.0889C612.934 78.1072 626.874 91.106 632.096 108.189L726.318 416.372C731.54 433.455 727.253 452.026 715.07 465.091L495.286 700.78C483.103 713.845 464.876 719.417 447.471 715.399L133.465 642.905C116.06 638.887 102.12 625.888 96.8976 608.805L2.67647 300.622C-2.54625 283.539 1.74129 264.968 13.924 251.903L233.708 16.2136Z" fill=""/>
+                    </svg>
+                    <i class="fas fa-step-backward"></i>
+                    <p>
+                        Précédent
+                    </p>
+                </button>
+                <button id="play" class="player-btn xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="729" height="717" viewBox="0 0 729 717" fill="none">
+                        <path d="M233.708 16.2136C245.891 3.14924 264.118 -2.42334 281.523 1.59502L595.529 74.0889C612.934 78.1072 626.874 91.106 632.096 108.189L726.318 416.372C731.54 433.455 727.253 452.026 715.07 465.091L495.286 700.78C483.103 713.845 464.876 719.417 447.471 715.399L133.465 642.905C116.06 638.887 102.12 625.888 96.8976 608.805L2.67647 300.622C-2.54625 283.539 1.74129 264.968 13.924 251.903L233.708 16.2136Z" fill=""/>
+                    </svg>
+                    <i class="fas fa-play"></i>
+                    <p>
+                        Play
+                    </p>
+                </button>
+                <button id="pause" class="player-btn xl none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="729" height="717" viewBox="0 0 729 717" fill="none">
+                        <path d="M233.708 16.2136C245.891 3.14924 264.118 -2.42334 281.523 1.59502L595.529 74.0889C612.934 78.1072 626.874 91.106 632.096 108.189L726.318 416.372C731.54 433.455 727.253 452.026 715.07 465.091L495.286 700.78C483.103 713.845 464.876 719.417 447.471 715.399L133.465 642.905C116.06 638.887 102.12 625.888 96.8976 608.805L2.67647 300.622C-2.54625 283.539 1.74129 264.968 13.924 251.903L233.708 16.2136Z" fill=""/>
+                    </svg>
+                    <i class="fas fa-pause"></i>
+                    <p>
+                        Pause
+                    </p>
+                </button>
+                <button id="next" class="player-btn md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="729" height="717" viewBox="0 0 729 717" fill="none">
+                        <path d="M233.708 16.2136C245.891 3.14924 264.118 -2.42334 281.523 1.59502L595.529 74.0889C612.934 78.1072 626.874 91.106 632.096 108.189L726.318 416.372C731.54 433.455 727.253 452.026 715.07 465.091L495.286 700.78C483.103 713.845 464.876 719.417 447.471 715.399L133.465 642.905C116.06 638.887 102.12 625.888 96.8976 608.805L2.67647 300.622C-2.54625 283.539 1.74129 264.968 13.924 251.903L233.708 16.2136Z" fill=""/>
+                    </svg>
+                    <i class="fas fa-step-forward"></i>
+                    <p>
+                        Suivant
+                    </p>
+                </button>
+                <button id="boucle" class="order-play active">
+                    <i class="fas fa-sync-alt"></i>
+                    <p>
+                        Boucle
+                    </p>
+                </button>
+            </div>
+
+            <div class="progress">
+                <p id="progress-time">
+                    {{!-- curentTime --}}
+                </p>
+                <input type="range" id="progress-bar" value="0" max="100">
+                <p id="progress-duration">
+                    {{!-- Durations --}}
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 

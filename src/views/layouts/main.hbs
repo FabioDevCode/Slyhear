@@ -6,7 +6,7 @@
 <body>
     <div id="menu">
         <div>
-            <img src="/img/slyhear_logo.svg" alt="Slyhear logo">
+            <img src="/img/sly_logo.svg" alt="Slyhear logo">
             <h1>
                 Slyhear
             </h1>
@@ -17,6 +17,8 @@
                 <li id="player" data-nav="nav-btn">
                     <a href="/player">
                         <i class="fas fa-compact-disc"></i>
+                        {{!-- <i class="fas fa-music"></i> --}}
+                        {{!-- <i class="fas fa-play"></i> --}}
                         <p>
                             Lecteur
                         </p>
@@ -32,14 +34,14 @@
                     </a>
                 </li>
 
-                {{!-- <li id="playlists" data-nav="nav-btn">
+                <li id="playlists" data-nav="nav-btn">
                     <a href="">
                         <i class="fas fa-stream"></i>
                         <p>
-                            Playlists
+                            Listes de lecture
                         </p>
                     </a>
-                </li> --}}
+                </li>
 
                 {{!-- <li id="upload" data-nav="nav-btn">
                     <a href="/upload">
@@ -59,20 +61,19 @@
                     </a>
                 </li>
 
-                {{!-- <li id="settings" data-nav="nav-btn">
+                <li id="settings" data-nav="nav-btn">
                     <a href="">
-                        <i class="fas fa-cogs"></i>
+                        <i class="fas fa-cog"></i>
                         <p>
                             Paramètres
                         </p>
                     </a>
-                </li> --}}
+                </li>
             </ul>
         </nav>
     </div>
 
     <section>
-        {{!-- <h2 id="breadcrumb"></h2> --}}
         <main>
             {{{body}}}
         </main>

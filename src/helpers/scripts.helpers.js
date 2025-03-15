@@ -8,6 +8,35 @@ const __dirname = path.dirname(__filename);
 
 const pythonScriptPath = path.resolve(__dirname, "../scripts/downloadSounds.py");
 
+export const sanatizeUrl = (list) => {
+	const urls = list.map((el) => {
+		try {
+			const url = new URL(el.url);
+			const hostname = url.hostname.replace("www.", "");
+
+			if (!["youtube.com", "youtu.be"].includes(hostname)) {
+				throw new Error("Not a YouTube URL");
+			}
+
+			let videoId = url.searchParams.get("v");
+
+			if (!videoId) {
+				const pathParts = url.pathname.split("/");
+				videoId = pathParts[pathParts.length - 1];
+			}
+
+			if (!videoId) throw new Error("ID vidéo introuvable");
+
+            return `https://www.youtube.com/watch?v=${videoId}`;
+		} catch (err) {
+			console.error(`INVALID URL : ${el.url} `);
+			return null;
+		}
+	}).filter(Boolean);
+
+	return urls;
+}
+
 export const downloadFromPython = async (urls) => {
 	const pythonProcess = spawn("python3", [pythonScriptPath, ...urls]);
 	console.log("Téléchargement des mp3...");
