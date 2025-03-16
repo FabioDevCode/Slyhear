@@ -6,10 +6,10 @@ body {
 #menu {
 	background-color: var(--noir);
 	/* border-right: 1px solid rgb(47, 44, 44); */
-	width: 280px;
+	width: 240px;
 	height: 100vh;
 	overflow: hidden;
-	padding: 20px;
+	padding: 20px 10px;
 
 	nav {
 		padding: 20px 0px;
@@ -84,7 +84,7 @@ body {
 
 section {
 	height: 100vh;
-	width: calc(100% - 280px);
+	width: calc(100% - 240px);
 
 	h2 {
 		display: flex;

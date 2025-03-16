@@ -10,39 +10,49 @@
     background-color: #151414;
     display: flex;
     align-items: center;
-    padding: 6px 0px;
-    height: 60px;
+    padding: 12px 0px;
+    height: 66px;
 
     .conteinr-btn-list {
+        display: flex;
+        align-items: center;
         width: max-content;
         height: max-content;
 
         .btn-style-list {
+            position: relative;
             cursor: pointer;
-            height: 40px;
+            height: 50px;
             width: 50px;
-            border-radius: 6px;
             font-size: 18px;
-            color: var(--blanc);
-            background: var(--rouge);
-            background: linear-gradient(
-                0deg,
-                rgba(199, 23, 23, 1) 45%,
-                rgba(103, 12, 12, 1) 100%
-            );
-            box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px, #670c0c 0 -2px 0 inset;
+
+            i {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                position: absolute;
+                z-index: 1000;
+                color: rgba(245, 245, 245, 0.3);
+            }
+
+            svg {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                fill: transparent;
+                height: 50px;
+                width: 50px;
+            }
+        }
+
+        .btn-style-list:hover svg {
+            fill: #252525;
         }
 
         .btn-style-list.active {
-            box-shadow: rgba(103, 12, 12, .9) 0 3px 5px inset;
-            background: linear-gradient(
-                0deg,
-                rgba(199, 23, 23, 1) 45%,
-                rgba(103, 12, 12, 1) 100%
-            );
-            filter: grayscale(.8);
-            transform: translateY(1px);
-
+            i {
+                color: var(--rouge);
+            }
         }
     }
 }
@@ -114,7 +124,7 @@
 
         h2 {
             text-align: center;
-            font-size: 1em;
+            font-size: .9em;
             line-height: 1.2em;
             display: inline-block;
             width: 100%;
@@ -139,7 +149,7 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        gap: 4px;
+        gap: 8px;
         border-radius: 4px;
         min-height: max-content;
         width: 32%;
@@ -191,7 +201,7 @@
             display: flex;
             width: 80%;
             text-align: left;
-            font-size: 1em;
+            font-size: .9em;
             line-height: 1.1em;
             max-height: 60px;
             word-wrap: break-word;

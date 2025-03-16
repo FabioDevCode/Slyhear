@@ -265,6 +265,11 @@ button:focus {
     color: #151414;
 }
 
+#pause,
+#play {
+    transform: scale(.86);
+}
+
 #play i {
     margin-right: -6px;
 }
