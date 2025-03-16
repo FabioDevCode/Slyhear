@@ -263,7 +263,6 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 	document.querySelector("#downloader").classList.add("none");
 	document.querySelector("#downloader-loader").classList.remove("loader");
 
-
 	if (!response?.ok) {
 		Toastify({
 			text: "Une erreur s'est produite lors du téléchargement.",
@@ -278,7 +277,7 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 		}).showToast();
 		return;
 	} else {
-		// localStorage.setItem("slyhear-list", JSON.stringify([]));
+		localStorage.setItem("slyhear-list", JSON.stringify([]));
 		Toastify({
 			text: "Le téléchargement est un succès !",
 			className: "success",

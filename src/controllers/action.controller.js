@@ -84,3 +84,28 @@ export const setStream = async(req, res) => {
 		});
 	}
 };
+
+export const deleteSound = async(req, res) => {
+	try {
+		const { id } = req.params;
+
+		function isValidId(id) {
+			return Number.isInteger(Number(id));
+		}
+
+		if(!isValidId(id)) {
+			throw new Error("Missing ID");
+		}
+
+		await models.Tracks.destroy({
+			where: { id }
+		})
+
+		res.status(200).json({
+			ok: true
+		})
+	} catch (err) {
+		console.error(err);
+		res.status(200).json({});
+	}
+};
