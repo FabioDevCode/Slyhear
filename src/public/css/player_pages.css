@@ -1,5 +1,5 @@
 #list-player {
-	background-color: #1e1e1e;
+	background-color: #151515;
     z-index: 1000;
     height: 100%;
     width: 500px;
@@ -30,6 +30,7 @@
             padding: 0 12px;
             border-radius: 4px;
             border: 1px solid transparent;
+            color: whitesmoke;
 
             img {
                 height: 36px;
@@ -42,13 +43,13 @@
             &.active {
                 background: linear-gradient(to right, #252525 25%, var(--i) 100%);
                 border: 1px solid var(--i);
-                box-shadow: rgba(190, 194, 197, 0.3) 0px 0px 3px 0px, rgba(190, 194, 197, 0.15) 0px 0px 2px 0px;
+                box-shadow: rgba(190, 194, 197, 0.3) 0px 0px 3px 0px, var(--i) 0px 0px 2px 0px;
             }
 
             &:hover {
                 background: linear-gradient(to right, #252525 25%, var(--i) 100%);
                 border: 1px solid var(--i);
-                box-shadow: rgba(190, 194, 197, 0.3) 0px 0px 3px 0px, rgba(190, 194, 197, 0.15) 0px 0px 2px 0px;
+                box-shadow: rgba(190, 194, 197, 0.3) 0px 0px 3px 0px, var(--i) 0px 0px 2px 0px;
             }
         }
     }
@@ -71,6 +72,7 @@
     max-height: 84vh;
     min-height: 84vh;
     background-repeat: no-repeat;
+    background-size: 110vh;
     border-radius: 0px 0px 0px 14px;
 }
 

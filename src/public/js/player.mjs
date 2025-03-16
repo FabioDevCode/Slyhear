@@ -247,7 +247,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 let lastScrollTime = 0;
-const scrollCooldown = 400;
+const scrollCooldown = 300;
 let userInteracted = false;
 
 function enableScrollInteraction() {
