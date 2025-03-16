@@ -1,16 +1,18 @@
 <div id="main_library">
     <div id="nav-library">
         <div class="conteinr-btn-list">
-            <button class="btn-style-list active" type="gird">
-                <i class="fas fa-th-large"></i>
+            <button class="btn-style-list" type="grid">
+                {{!-- <i class="fas fa-th-large"></i> --}}
+                <i class="fas fa-th"></i>
             </button>
-            <button class="btn-style-list" type="list">
-                <i class="fas fa-th-list"></i>
+            <button class="btn-style-list active" type="list">
+                {{!-- <i class="fas fa-th-list"></i> --}}
+                <i class="fas fa-list"></i>
             </button>
         </div>
     </div>
 
-    <ul id="library_sounds" class="grid">
+    <ul id="library_sounds" class="list">
         {{#each tracks}}
         <li data-tracks-id="{{id}}">
             <button class="delete_btn" track-id="{{id}}">

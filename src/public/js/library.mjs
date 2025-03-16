@@ -2,8 +2,17 @@ document.querySelectorAll(".btn-style-list").forEach(btn => {
     btn.addEventListener('click', function() {
         document.querySelectorAll(".btn-style-list").forEach(el => el.classList.remove("active"));
         this.classList.add("active");
+
+        const type = this.getAttribute("type");
+
+        document.querySelector("#library_sounds").classList.remove("grid");
+        document.querySelector("#library_sounds").classList.remove("list");
+        document.querySelector("#library_sounds").classList.add(type);
     })
 });
+
+
+
 
 
 // Function pour supprimer le morceaux de musique ======================//
