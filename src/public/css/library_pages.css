@@ -88,7 +88,7 @@
         min-width: 140px;
         overflow: hidden;
 
-        button {
+        button.delete_btn {
             display: none;
             position: absolute;
             cursor: pointer;
@@ -98,6 +98,33 @@
             width: 32px;
             border-radius: 4px;
             background-color: red;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.26) 0px 6px 6px;
+
+            &:active {
+                transform: scale(.96);
+            }
+
+            &:active i {
+                transform: scale(1.03);
+            }
+
+            i {
+                font-size: 16px;
+                color: whitesmoke
+            }
+        }
+
+        button.update-btn {
+            display: none;
+            position: absolute;
+            cursor: pointer;
+            top: 8px;
+            left: 8px;
+            height: 32px;
+            width: 32px;
+            border-radius: 4px;
+            background-color: #0444B0;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.26) 0px 6px 6px;
 
@@ -165,7 +192,7 @@
         overflow: hidden;
         background-color: #1e1e1e;
 
-        button {
+        button.delete_btn {
             display: none;
             position: absolute;
             cursor: pointer;
@@ -177,6 +204,35 @@
             width: 32px;
             border-radius: 4px;
             background-color: red;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.26) 0px 6px 6px;
+
+            &:active {
+                transform: translateY(-50%) scale(.96);
+            }
+
+            &:active i {
+                transform: scale(1.03);
+            }
+
+            i {
+                font-size: 16px;
+                color: whitesmoke
+            }
+        }
+
+        button.update-btn {
+            display: none;
+            position: absolute;
+            cursor: pointer;
+            /* top: 4px; */
+            top: 50%;
+            transform: translateY(-50%);
+            right: 50px;
+            height: 32px;
+            width: 32px;
+            border-radius: 4px;
+            background-color: #0444B0;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.26) 0px 6px 6px;
 
