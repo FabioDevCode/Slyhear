@@ -66,11 +66,14 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 8px;
     overflow: auto;
     overflow-y: auto;
     overflow-x: hidden;
-    height: calc(100vh - 60px);
+    height: max-content;
+    max-height: calc(100vh - 60px);
 
     li {
         position: relative;
@@ -138,11 +141,14 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 8px;
     overflow: auto;
     overflow-y: auto;
     overflow-x: hidden;
-    height: calc(100vh - 60px);
+    height: max-content;
+    max-height: calc(100vh - 60px);
 
     li {
         position: relative;
