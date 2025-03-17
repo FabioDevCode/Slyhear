@@ -204,13 +204,16 @@ audio.addEventListener('ended', () => {
 });
 
 audio.addEventListener("loadedmetadata", () => {
-    progressDuration.textContent = formatTime(audio.duration);
+    progressDuration.textContent = formatTime(Math.round(audio.duration));
+    progressBar.removeAttribute("step");
+    console.log("audio.duration : ", Math.round(audio.duration));
+    progressBar.setAttribute("step", 100/Math.round(audio.duration));
 });
 
 // Mise à jour de la barre de progression
 audio.addEventListener('timeupdate', () => {
-    progressBar.value = (audio.currentTime / audio.duration) * 100 || 0;
-    progressTime.textContent = formatTime(audio.currentTime);
+    progressBar.value = (audio.currentTime / Math.round(audio.duration)) * 100 || 0;
+    progressTime.textContent = formatTime(Math.round(audio.currentTime));
 });
 
 // CLAVIER MAPPING ============================================================= //
@@ -235,7 +238,7 @@ document.addEventListener('keydown', (event) => {
             audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
             break;
         case 'ArrowRight':
-            audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
+            audio.currentTime = Math.min(audio.currentTime + seekAmount, Math.round(audio.duration));
             break;
         case 'ArrowUp':
             prevButton.click();
@@ -269,25 +272,33 @@ function handleScroll(event) {
     if (now - lastScrollTime < scrollCooldown) return; // Anti-spam du scroll
     lastScrollTime = now;
 
-    // Scroll vertical (molette haut/bas) pour changer de musique
-    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
-        if (event.deltaY > 0) {
-            nextButton.click(); // Changer la chanson vers la suivante
-        } else if (event.deltaY < 0) {
-            prevButton.click(); // Changer la chanson vers la précédente
-        }
-        // Si la musique est en pause, on la met en lecture
-        if (audio.paused) {
-            audio.play().catch(error => console.warn("Lecture bloquée :", error));
-        }
+
+    // Scroll horizontal (molette gauche/droite) pour avancer/reculer dans l'audio
+    if (event.deltaX > 0) {
+        audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
     } else {
-        // Scroll horizontal (molette gauche/droite) pour avancer/reculer dans l'audio
-        if (event.deltaX > 0) {
-            // Scroll vers la gauche -> Reculer dans la musique
-            audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
-        } else {
-            // Scroll vers la droite -> Avancer dans la musique
-            audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
-        }
+        audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
     }
+
+    // // Scroll vertical (molette haut/bas) pour changer de musique
+    // if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+    //     if (event.deltaY > 0) {
+    //         nextButton.click(); // Changer la chanson vers la suivante
+    //     } else if (event.deltaY < 0) {
+    //         prevButton.click(); // Changer la chanson vers la précédente
+    //     }
+    //     // Si la musique est en pause, on la met en lecture
+    //     if (audio.paused) {
+    //         audio.play().catch(error => console.warn("Lecture bloquée :", error));
+    //     }
+    // } else {
+    //     // Scroll horizontal (molette gauche/droite) pour avancer/reculer dans l'audio
+    //     if (event.deltaX > 0) {
+    //         // Scroll vers la gauche -> Reculer dans la musique
+    //         audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
+    //     } else {
+    //         // Scroll vers la droite -> Avancer dans la musique
+    //         audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
+    //     }
+    // }
 }
