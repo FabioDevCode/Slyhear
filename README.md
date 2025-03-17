@@ -1,3 +1,7 @@
+<div align="center" style="display: flex">
+    <img height="120px" src="./images/Slyhear_logo_long.png" alt="Slyhear Logo" />
+</div>
+
 # Slyhear
 
-Music App - work in progress
+Application de streaming audio.
