@@ -8,24 +8,35 @@ const nextButton = document.getElementById('next');
 const progressBar = document.getElementById('progress-bar');
 const progressTime = document.getElementById("progress-time");
 const progressDuration = document.getElementById("progress-duration");
+const randomButton = document.querySelector("#random");
+const boucleButton = document.querySelector("#boucle");
 const seekAmount = 5; // Nombre de secondes à avancer/reculer
 
-let random = false;
+// normal, random or same
+let orderType = "normal";
 
-document.querySelectorAll(".order-play").forEach(btn => {
-    btn.addEventListener("click", function() {
-        document.querySelectorAll(".order-play").forEach(b => b.classList.remove("active"))
+randomButton.addEventListener("click", function() {
+    boucleButton.classList.remove("active");
+    if(Array.from(this.classList).includes("active")) {
+        this.classList.remove("active");
+        orderType = "normal";
+    } else {
         this.classList.add("active");
-    })
+        orderType = "random"
+    }
 });
 
-document.querySelector("#random").addEventListener("click", () => {
-    random = true;
+boucleButton.addEventListener("click", function() {
+    randomButton.classList.remove("active");
+    if(Array.from(this.classList).includes("active")) {
+        this.classList.remove("active");
+        orderType = "normal";
+    } else {
+        this.classList.add("active");
+        orderType = "same"
+    }
 });
 
-document.querySelector("#boucle").addEventListener("click", () => {
-    random = false;
-});
 
 function clickOnPlay() {
     playButton.classList.add("none");
@@ -139,20 +150,26 @@ stopButton?.addEventListener('click', () => {
 });
 
 prevButton.addEventListener('click', () => {
-    if(!random) {
-        const newIndex = Number.parseInt(currentSongIndex) - 1;
-        if(newIndex < 0) {
-            currentSongIndex = songs.length - 1;
-        } else {
-            currentSongIndex = newIndex
-        }
-    } else {
-        // Cas avec random : on sélectionne un index aléatoire
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * songs.length);
-        } while (newIndex === currentSongIndex);
-        currentSongIndex = newIndex;
+    let newIndex;
+
+    switch(orderType) {
+        case "normal":
+            newIndex = Number.parseInt(currentSongIndex) - 1;
+            if(newIndex < 0) {
+                currentSongIndex = songs.length - 1;
+            } else {
+                currentSongIndex = newIndex
+            }
+            break;
+        case "random":
+            // Cas avec random : on sélectionne un index aléatoire
+            do {
+                newIndex = Math.floor(Math.random() * songs.length);
+            } while (newIndex === currentSongIndex);
+            currentSongIndex = newIndex;
+            break;
+        default:
+            break;
     }
 
     loadSong(songs[currentSongIndex]);
@@ -161,20 +178,25 @@ prevButton.addEventListener('click', () => {
 });
 
 nextButton.addEventListener('click', () => {
-    if(!random) {
-        const newIndex = Number.parseInt(currentSongIndex) + 1;
-        if(newIndex > songs.length - 1) {
-            currentSongIndex = 0;
-        } else {
+    let newIndex;
+
+    switch(orderType) {
+        case "normal":
+            newIndex = Number.parseInt(currentSongIndex) + 1;
+            if(newIndex > songs.length - 1) {
+                currentSongIndex = 0;
+            } else {
+                currentSongIndex = newIndex;
+            };
+            break;
+        case "random":
+            do {
+                newIndex = Math.floor(Math.random() * songs.length);
+            } while (newIndex === currentSongIndex);
             currentSongIndex = newIndex;
-        };
-    } else {
-        // Cas avec random : on sélectionne un index aléatoire
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * songs.length);
-        } while (newIndex === currentSongIndex);
-        currentSongIndex = newIndex;
+            break;
+        default:
+            break;
     }
 
     loadSong(songs[currentSongIndex]);
@@ -189,14 +211,20 @@ progressBar.addEventListener('input', () => {
 
 // Ajouter un événement pour changer de chanson à la fin du morceau
 audio.addEventListener('ended', () => {
-    if(!random) {
-        currentSongIndex = (Number.parseInt(currentSongIndex) + 1) % songs.length;
-    } else {
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * songs.length);
-        } while (newIndex === currentSongIndex);
-        currentSongIndex = newIndex;
+    let newIndex;
+
+    switch(orderType) {
+        case "normal":
+            currentSongIndex = (Number.parseInt(currentSongIndex) + 1) % songs.length;
+            break;
+        case "random":
+            do {
+                newIndex = Math.floor(Math.random() * songs.length);
+            } while (newIndex === currentSongIndex);
+            currentSongIndex = newIndex;
+            break;
+        default:
+            break;
     }
 
     loadSong(songs[currentSongIndex]);
@@ -206,7 +234,6 @@ audio.addEventListener('ended', () => {
 audio.addEventListener("loadedmetadata", () => {
     progressDuration.textContent = formatTime(Math.round(audio.duration));
     progressBar.removeAttribute("step");
-    console.log("audio.duration : ", Math.round(audio.duration));
     progressBar.setAttribute("step", 100/Math.round(audio.duration));
 });
 
@@ -229,11 +256,6 @@ document.addEventListener('keydown', (event) => {
                 audio.pause();
             }
             break;
-        case 'KeyS':
-            clickOnPause();
-            audio.pause();
-            audio.currentTime = 0;
-            break;
         case 'ArrowLeft':
             audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
             break;
@@ -245,6 +267,27 @@ document.addEventListener('keydown', (event) => {
             break;
         case 'ArrowDown':
             nextButton.click();
+            break;
+        default:
+            break;
+    }
+
+    switch(event.key) {
+        case 'a':
+        case 'A':
+            randomButton.click();
+            break;
+        case 'b':
+        case 'B':
+            boucleButton.click();
+            break;
+        case 's':
+        case 'S':
+            clickOnPause();
+            audio.pause();
+            audio.currentTime = 0;
+            break;
+        default:
             break;
     }
 });
@@ -272,33 +315,25 @@ function handleScroll(event) {
     if (now - lastScrollTime < scrollCooldown) return; // Anti-spam du scroll
     lastScrollTime = now;
 
-
-    // Scroll horizontal (molette gauche/droite) pour avancer/reculer dans l'audio
-    if (event.deltaX > 0) {
-        audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
+    // Scroll vertical (molette haut/bas) pour changer de musique
+    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+        // if (event.deltaY > 0) {
+        //     nextButton.click(); // Changer la chanson vers la suivante
+        // } else if (event.deltaY < 0) {
+        //     prevButton.click(); // Changer la chanson vers la précédente
+        // }
+        // // Si la musique est en pause, on la met en lecture
+        // if (audio.paused) {
+        //     audio.play().catch(error => console.warn("Lecture bloquée :", error));
+        // }
     } else {
-        audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
+        // Scroll horizontal (molette gauche/droite) pour avancer/reculer dans l'audio
+        if (event.deltaX > 0) {
+            // Scroll vers la gauche -> Reculer dans la musique
+            audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
+        } else {
+            // Scroll vers la droite -> Avancer dans la musique
+            audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
+        }
     }
-
-    // // Scroll vertical (molette haut/bas) pour changer de musique
-    // if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
-    //     if (event.deltaY > 0) {
-    //         nextButton.click(); // Changer la chanson vers la suivante
-    //     } else if (event.deltaY < 0) {
-    //         prevButton.click(); // Changer la chanson vers la précédente
-    //     }
-    //     // Si la musique est en pause, on la met en lecture
-    //     if (audio.paused) {
-    //         audio.play().catch(error => console.warn("Lecture bloquée :", error));
-    //     }
-    // } else {
-    //     // Scroll horizontal (molette gauche/droite) pour avancer/reculer dans l'audio
-    //     if (event.deltaX > 0) {
-    //         // Scroll vers la gauche -> Reculer dans la musique
-    //         audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
-    //     } else {
-    //         // Scroll vers la droite -> Avancer dans la musique
-    //         audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
-    //     }
-    // }
 }
