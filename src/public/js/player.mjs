@@ -125,6 +125,7 @@ document.querySelectorAll('.track').forEach(track => {
     track.addEventListener('click', function() {
         currentSongIndex = this.getAttribute('index');
         loadSong(songs[currentSongIndex]);
+        clickOnPlay();
         audio.play();
     });
 });
