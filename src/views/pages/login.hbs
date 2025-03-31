@@ -1,0 +1,76 @@
+<div id="login">
+    <div>
+        <div id="login_title">
+            <img src="/img/logo_sly.svg" alt="Slyhear logo">
+            <h1>
+                Slyhear
+            </h1>
+        </div>
+
+        <form id="login_form">
+            <div class="form-group">
+                <label for="login">
+                    Login
+                </label>
+                <input name="login" type="text" placeholder="Login">
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    Mot de passe
+                </label>
+                <input name="password" type="password" placeholder="Mot de passe">
+            </div>
+
+            {{#if firstUser}}
+                <input type="hidden" name="firstUser" value="{{firstUser}}">
+                <div class="form-group">
+                    <label for="confirm_password">
+                        Confirmation du mot de passe
+                    </label>
+                    <input name="confirm_password" type="password" placeholder="Confirmation du mot de passe">
+                </div>
+
+                <button class="btn">
+                    Je fais ma première connexion
+                </button>
+            {{else}}
+                <input type="hidden" name="firstUser" value="false">
+                <input id="newUser" type="hidden" name="newUser" value="false">
+
+                <div id="newUser_bloc" class="allBtns none">
+                    <div class="form-group">
+                        <label for="confirm_password">
+                            Confirmation du mot de passe
+                        </label>
+                        <input name="confirm_password" type="password" placeholder="Confirmation du mot de passe">
+                    </div>
+                    <div  class="form-group none">
+                        <label for="confirm_password">
+                            Confirmation du mot de passe
+                        </label>
+                        <input name="confirm_password" type="password" placeholder="Confirmation du mot de passe">
+                    </div>
+                    <button class="btn">
+                        Je fais ma première connexion
+                    </button>
+                    <button id="comeback_co" type="button" class="btn default">
+                        Retour
+                    </button>
+                </div>
+
+                <div id="logIn_bloc" class="allBtns">
+                    <button class="btn">
+                        Je me connecte
+                    </button>
+                    <button id="first_co" type="button" class="btn default">
+                        Première connexion
+                    </button>
+                </div>
+            {{/if}}
+
+        </form>
+    </div>
+</div>
+
+<script type="module" src="/js/login.mjs"></script>

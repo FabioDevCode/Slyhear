@@ -1,0 +1,21 @@
+{
+	"login": {
+		"type": "STRING",
+		"allowNull": false,
+        "unique": true
+	},
+    "password": {
+		"type": "STRING",
+		"allowNull": true
+	},
+    "activated": {
+        "type": "BOOLEAN",
+        "allowNull": false,
+        "defaultValue": false
+    },
+    "isAdmin": {
+        "type": "BOOLEAN",
+        "allowNull": false,
+        "defaultValue": false
+    }
+}

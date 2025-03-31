@@ -6,5 +6,7 @@ router.post("/download", actl.goDownload);
 router.get("/delete/:id", actl.deleteSound);
 router.get("/stream/:code", actl.setStream);
 
+router.post("/login", actl.login);
+
 
 export default router;

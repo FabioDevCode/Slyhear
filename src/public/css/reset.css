@@ -87,7 +87,10 @@ video {
 	box-sizing: border-box;
 	border: 0px;
 	overscroll-behavior: none;
+}
 
+input {
+	border: none;
 }
 
 article,

@@ -1,8 +1,11 @@
 import { preparedTracksToShow } from "../helpers/tracks.helpers.js";
 import models from "../models/index.js";
 
-export const index = (req, res) => {
-	res.redirect("/library");
+export const index = async(req, res) => {
+	res.render("login", {
+		layout: "login",
+		firstUser: !(await models.User.count())
+	});
 };
 
 export const player = async(req, res) => {
@@ -46,5 +49,13 @@ export const upload = (req, res) => {
 };
 
 export const download = (req, res) => {
-	res.render("download");
+	const data = {
+		options: [
+            { name: 'Option 1', value: '1', checked: true },
+            { name: 'Option 2', value: '2' },
+            { name: 'Option 3', value: '3' }
+        ]
+	}
+
+	res.render("download", data);
 };

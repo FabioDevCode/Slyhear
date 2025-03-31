@@ -9,6 +9,7 @@ const trackDir = path.join(__dirname, "..", "upload", "sounds");
 import models from "../models/index.js";
 import { downloadFromPython, formatedDataForDB, sanatizeUrl } from "../helpers/scripts.helpers.js";
 import { downloadImagesFromUrls } from "../scripts/downloadImages.js";
+import { generateCookie } from "../helpers/user.helpers.js";
 
 
 export const goDownload = async (req, res) => {
@@ -28,7 +29,7 @@ export const goDownload = async (req, res) => {
 		});
 	} catch (err) {
 		console.error(err);
-		res.status(200).json({});
+		res.status(500).json({});
 	}
 };
 
@@ -109,3 +110,45 @@ export const deleteSound = async(req, res) => {
 		res.status(200).json({});
 	}
 };
+
+export const login = async(req, res) => {
+	const { firstUser, login, password, confirm_password, newUser } = req.body;
+
+	try {
+		if(firstUser) {
+			const user = await models.User.create({
+				login,
+				password,
+				activated: true,
+				isAdmin: true
+			});
+
+			console.log(user);
+			// return le cookie
+
+			const cookie = generateCookie(user);
+
+			console.log(cookie);
+		}
+
+		if(newUser) {
+			// Si première connexion
+			// récupérer l'id (NE DOIS PAS ETRE 1)
+		}
+
+
+
+
+
+
+
+		res.status(200).json({
+			cookie: "ok"
+		})
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({});
+	}
+}
+
+// Penser a faire une route permettant de créer un user en tant qu'admin
