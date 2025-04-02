@@ -113,38 +113,46 @@ export const deleteSound = async(req, res) => {
 
 export const login = async(req, res) => {
 	const { firstUser, login, password, confirm_password, newUser } = req.body;
+	let user;
+	let cookie = "slyhear";
 
 	try {
 		if(firstUser) {
-			const user = await models.User.create({
+			// Only for first user is Admin
+
+			// user = await models.User.create({
+			// 	login,
+			// 	password,
+			// 	activated: true,
+			// 	isAdmin: true
+			// });
+
+			user = {
 				login,
 				password,
 				activated: true,
 				isAdmin: true
-			});
+			}
 
-			console.log(user);
-			// return le cookie
-
-			const cookie = generateCookie(user);
-
-			console.log(cookie);
+			cookie = generateCookie(user);
 		}
 
 		if(newUser) {
+			// Première connexion d'un user crée par l'Admin
+
 			// Si première connexion
 			// récupérer l'id (NE DOIS PAS ETRE 1)
 		}
 
+		if(!firstUser && !newUser) {
+			// Login classque
+		}
 
 
+		console.log("req.body : ", req.body);
 
 
-
-
-		res.status(200).json({
-			cookie: "ok"
-		})
+		res.status(200).json({cookie})
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({});
