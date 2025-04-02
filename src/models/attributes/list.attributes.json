@@ -1,0 +1,10 @@
+{
+    "title": {
+		"type": "STRING",
+		"allowNull": false
+	},
+    "url": {
+		"type": "STRING",
+		"allowNull": false
+	}
+}
