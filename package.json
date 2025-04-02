@@ -4,6 +4,10 @@
 	"description": "Music App",
 	"type": "module",
 	"main": "server.js",
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"engineStrict": true,
 	"scripts": {
 		"biome": "npx @biomejs/biome check --write ./src",
 		"dev": "node --watch server.js",
