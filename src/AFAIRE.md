@@ -21,12 +21,15 @@
 
 - Tag les fichiers mp3 avec la jaquette (pour les lecteurs)
 - Pages téléchargement choisir de télécharger en one-shot (fichier par fichier ou via une liste en local storage cette fois) sans utiliser l'application pour la suite téléchargement classique (faire de vue) avec un bouton pour switch entre les 2.
+
 - Permettre d'update un morceaux (titre, dl un nouvelle image a partir d'un autre lien YT ou déposer une image ou un url d'une image)
 
 ## Idée de paramètres
 
-- Vider la liste après un téléchargement : Boolean
-- Sélectionner les différents menu disponible : Liste de choix à cocher
+- Vider la liste après un téléchargement : Boolean (default oui);
+- Sauvegarder une list de téléchargement non télécharger en BDD (peut-etre une table LIST)
+- Visualiation library préférer: Grid ou List
+- Langue de l'application: FR, EN
 
 ## Commande Docker :
 
