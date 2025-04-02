@@ -9,6 +9,10 @@ if(strLibrary?.length) {
     document.querySelector("#library_sounds").classList.remove("list");
     document.querySelector("#library_sounds").classList.add(strLibrary);
     document.querySelector(`[type="${strLibrary}"]`)?.classList.add("active");
+} else {
+    document.querySelector("#library_sounds").classList.remove("list");
+    document.querySelector("#library_sounds").classList.add("grid");
+    document.querySelector('[type="grid"]')?.classList.add("active");
 }
 
 document.querySelectorAll(".btn-style-list").forEach(btn => {

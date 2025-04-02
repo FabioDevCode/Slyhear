@@ -45,6 +45,20 @@ body {
 					}
 				}
 
+				span {
+					cursor: pointer;
+					display: flex;
+					align-items: center;
+					gap: 10px;
+					padding: 16px;
+					height: 100%;
+					width: 100%;
+
+					i {
+						font-size: 20px;
+					}
+				}
+
 				svg {
 					width: 30px;
 					fill: white;
