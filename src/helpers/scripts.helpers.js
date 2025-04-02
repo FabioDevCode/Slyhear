@@ -52,7 +52,9 @@ export const downloadFromPython = async (urls) => {
 		});
 
 		pythonProcess.stderr.on("data", (data) => {
-			console.error(`stderr: ${data.toString()}`);
+			if(!data.toString().includes('WARNING')) {
+				console.error(`stderr: ${data.toString()}`);
+			}
 		});
 
 		pythonProcess.on("close", (code) => {
