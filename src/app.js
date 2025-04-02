@@ -10,6 +10,7 @@ import i18n from "i18n";
 import morgan from "morgan";
 import split from "split";
 import routes from "./routes/index.js";
+import { checkOrCreateConfig } from "./helpers/app.helpers.js";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -18,6 +19,8 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
+
+checkOrCreateConfig();
 
 // i18n config
 i18n.configure({
