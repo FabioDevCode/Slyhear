@@ -84,8 +84,7 @@
         gap: 4px;
         border-radius: 4px;
         min-height: max-content;
-        max-width: 196px;
-        min-width: 140px;
+        width: 11.8%;
         overflow: hidden;
 
         button.delete_btn {
@@ -196,7 +195,6 @@
             display: none;
             position: absolute;
             cursor: pointer;
-            /* top: 4px; */
             top: 50%;
             transform: translateY(-50%);
             right: 10px;
@@ -273,6 +271,7 @@
 }
 
 
+/* RESPONSIVE LIST */
 @media screen and (max-width: 1195px) {
     .list {
         li {
@@ -288,3 +287,55 @@
         }
     }
 }
+
+
+/* RESPONSIVE GRID */
+@media screen and (max-width: 1350px) {
+    .grid {
+        li {
+            width: 11.7%;
+        }
+    }
+}
+
+@media screen and (max-width: 1295px) {
+    .grid {
+        li {
+            width: 15.6%;
+        }
+    }
+}
+
+@media screen and (max-width: 975px) {
+    .grid {
+        li {
+            width: 23.8%;
+        }
+    }
+}
+
+@media screen and (max-width: 825px) {
+    .grid {
+        li {
+            width: 31.8%;
+        }
+    }
+}
+
+@media screen and (max-width: 725px) {
+    .grid {
+        li {
+            width: 48.4%;
+        }
+    }
+}
+
+@media screen and (max-width: 555px) {
+    .grid {
+        li {
+            width: 98%;
+        }
+    }
+}
+
+/* 550 */

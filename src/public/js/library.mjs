@@ -1,9 +1,24 @@
+const strLibrary = localStorage.getItem("library");
+
+if(strLibrary?.length) {
+    document.querySelectorAll(".btn-style-list").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    document.querySelector("#library_sounds").classList.remove("grid");
+    document.querySelector("#library_sounds").classList.remove("list");
+    document.querySelector("#library_sounds").classList.add(strLibrary);
+    document.querySelector(`[type="${strLibrary}"]`)?.classList.add("active");
+}
+
 document.querySelectorAll(".btn-style-list").forEach(btn => {
     btn.addEventListener('click', function() {
         document.querySelectorAll(".btn-style-list").forEach(el => el.classList.remove("active"));
         this.classList.add("active");
 
         const type = this.getAttribute("type");
+
+        localStorage.setItem("library", type);
 
         document.querySelector("#library_sounds").classList.remove("grid");
         document.querySelector("#library_sounds").classList.remove("list");
