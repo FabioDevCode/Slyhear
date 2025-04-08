@@ -1,14 +1,10 @@
 // LOGIN
-
 document.getElementById("login_form")?.addEventListener("submit", async function(e) {
     try {
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
         const values = Object.fromEntries(formData.entries());
-
-        console.log(values);
-        console.log("--------");
 
         const call = await fetch("/action/login", {
             method: "POST",
@@ -18,11 +14,15 @@ document.getElementById("login_form")?.addEventListener("submit", async function
             body: JSON.stringify(values)
         });
 
-        const response = await call.json();
+        const resp = await call.json();
 
-        console.log(response);
+        if(resp.cookie) {
+            document.cookie = `slyhear=${resp.cookie}; path=/;`;
+	        window.location.replace('/library');
+        }
     } catch (err) {
         console.error(err);
+        // toastr erreur
     }
 });
 

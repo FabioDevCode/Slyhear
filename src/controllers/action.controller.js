@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import bcrypt from "bcryptjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -119,20 +120,12 @@ export const login = async(req, res) => {
 	try {
 		if(firstUser) {
 			// Only for first user is Admin
-
-			// user = await models.User.create({
-			// 	login,
-			// 	password,
-			// 	activated: true,
-			// 	isAdmin: true
-			// });
-
-			user = {
+			user = await models.User.create({
 				login,
-				password,
+				password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
 				activated: true,
 				isAdmin: true
-			}
+			});
 
 			cookie = generateCookie(user);
 		}
@@ -146,11 +139,16 @@ export const login = async(req, res) => {
 
 		if(!firstUser && !newUser) {
 			// Login classque
+			user = await models.User.findOne({
+				where: {
+					login: login
+				}
+			});
+
+			if(bcrypt.compareSync(password, user.password)) {
+				cookie = generateCookie(user);
+			}
 		}
-
-
-		console.log("req.body : ", req.body);
-
 
 		res.status(200).json({cookie})
 	} catch (err) {

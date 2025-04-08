@@ -87,7 +87,7 @@ body {
 
 #menu div {
 	display: flex;
-	justify-content: start;
+	justify-content: center;
 	align-items: center;
 	overflow: hidden;
 	display: flex;
@@ -98,12 +98,12 @@ body {
 	margin: 10px 0px;
 
 	img {
-		height: 50px;
+		height: 60px;
 	}
 
 	h1 {
 		font-family: "Medula One", system-ui, "Arial Narrow", Arial, sans-serif;;
-		font-size: 48px;
+		font-size: 56px;
 	}
 }
 

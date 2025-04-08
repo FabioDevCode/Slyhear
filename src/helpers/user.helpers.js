@@ -1,6 +1,5 @@
 import * as crypto from "../utils/crypto.utils.js";
 
-
 export const generateCookie = (user) => {
     if(!user) {
         return false

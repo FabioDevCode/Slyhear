@@ -1,5 +1,5 @@
-import { preparedTracksToShow } from "../helpers/tracks.helpers.js";
 import models from "../models/index.js";
+import { preparedTracksToShow } from "../helpers/tracks.helpers.js";
 
 export const index = async(req, res) => {
 	res.render("login", {
