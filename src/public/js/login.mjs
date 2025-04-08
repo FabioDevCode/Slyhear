@@ -37,3 +37,24 @@ document.getElementById("comeback_co")?.addEventListener("click", () => {
     document.getElementById("newUser_bloc").classList.add("none");
     document.getElementById("logIn_bloc").classList.remove("none");
 });
+
+const passwordInput = document.querySelector('input[name="password"]');
+const toggleButton = document.getElementById("toggle-password");
+
+toggleButton.addEventListener('mousedown', () => {
+    document.querySelector(".pwd-fa-eye").classList.add("none");
+    document.querySelector(".pwd-fa-eye-slash").classList.remove("none");
+    passwordInput.type = 'text';
+});
+
+toggleButton.addEventListener('mouseup', () => {
+    document.querySelector(".pwd-fa-eye").classList.remove("none");
+    document.querySelector(".pwd-fa-eye-slash").classList.add("none");
+    passwordInput.type = 'password';
+});
+
+toggleButton.addEventListener('mouseleave', () => {
+    document.querySelector(".pwd-fa-eye").classList.remove("none");
+    document.querySelector(".pwd-fa-eye-slash").classList.add("none");
+    passwordInput.type = 'password';
+});
