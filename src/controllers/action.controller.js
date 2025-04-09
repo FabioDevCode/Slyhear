@@ -145,7 +145,7 @@ export const login = async(req, res) => {
 				}
 			});
 
-			if(bcrypt.compareSync(password, user.password)) {
+			if(user && bcrypt.compareSync(password, user?.password)) {
 				cookie = generateCookie(user);
 			}
 		}

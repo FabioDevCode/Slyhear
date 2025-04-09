@@ -5,6 +5,11 @@ document.getElementById("login_form")?.addEventListener("submit", async function
         const form = e.target;
         const formData = new FormData(form);
         const values = Object.fromEntries(formData.entries());
+        Object.keys(values).forEach(key => {
+            if (typeof values[key] === 'string') {
+                values[key] = values[key].trim();
+            }
+        });
 
         const call = await fetch("/action/login", {
             method: "POST",
