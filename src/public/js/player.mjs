@@ -258,15 +258,19 @@ document.addEventListener('keydown', (event) => {
             }
             break;
         case 'ArrowLeft':
+            event.preventDefault();
             audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
             break;
         case 'ArrowRight':
+            event.preventDefault();
             audio.currentTime = Math.min(audio.currentTime + seekAmount, Math.round(audio.duration));
             break;
         case 'ArrowUp':
+            event.preventDefault();
             prevButton.click();
             break;
         case 'ArrowDown':
+            event.preventDefault();
             nextButton.click();
             break;
         default:
