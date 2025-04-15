@@ -7,8 +7,6 @@
 <h3 align="center">Slyhear</h3>
 <p align="center">Une application de streaming audio.</p>
 
-<br>
-
 ## Fonctionnalités
 
 - [x] Téléchargement de musique
@@ -36,7 +34,7 @@ docker run -p 3324:3324 --name slyhear-dev fabiodevcode/slyhear:dev
 
 3. Ecoutez
 
-<a href="http://localhost:3324/" target="_blank">http://localhost:3324/</a>
+> `http://localhost:3324`
 
 
 
