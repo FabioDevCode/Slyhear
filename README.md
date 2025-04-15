@@ -2,6 +2,41 @@
     <img height="120px" src="./images/Slyhear_logo_long.png" alt="Slyhear Logo" />
 </div>
 
-# Slyhear
+<br>
 
-Application de streaming audio.
+<h3 align="center">Slyhear</h3>
+<p align="center">Une application de streaming audio.</p>
+
+<br>
+
+## Fonctionnalités
+
+- [x] Téléchargement de musique
+- [x] Bibliothèque d'audios
+- [x] Suppression des audios
+- [x] Lecteur
+- [ ] Mise à jour des audios
+- [ ] Création de playlists
+- [ ] Multiple utilisateurs
+- [ ] ...
+
+## Installation
+
+Uniquement via Docker pour le moment car toujours en cours de développement.
+
+1. Téléchargez l'image Docker
+```sh
+docker pull fabiodevcode/slyhear:dev
+```
+
+2. Démarrez un container
+```sh
+docker run -p 3324:3324 --name slyhear-dev fabiodevcode/slyhear:dev
+```
+
+3. Ecoutez
+
+<a href="http://localhost:3324/" target="_blank">http://localhost:3324/</a>
+
+
+
