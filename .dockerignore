@@ -1,0 +1,12 @@
+node_modules
+docs
+images
+.gitignore
+.git
+biome.json
+README.md
+License.md
+src/upload/*
+src/database/db.sqlite
+src/config/keys.json
+build-and-push.sh

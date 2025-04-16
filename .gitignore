@@ -1,7 +1,6 @@
 .vscode
 .env
 .DS_Store
-.dockerignore
 node_modules
 node_modules/*
 package-lock.json
@@ -13,4 +12,4 @@ src/config/keys.json
 src/upload/images/*.jpg
 src/upload/sounds/*.mp3
 src/upload/music
-Dockerfile
+build-and-push.sh
