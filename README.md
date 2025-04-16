@@ -1,4 +1,5 @@
 <div align="center" style="display: flex">
+    <br>
     <img height="120px" src="./images/Slyhear_logo_long.png" alt="Slyhear Logo" />
 </div>
 
