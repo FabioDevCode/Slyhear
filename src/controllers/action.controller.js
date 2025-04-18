@@ -147,6 +147,8 @@ export const login = async(req, res) => {
 
 			if(user && bcrypt.compareSync(password, user?.password)) {
 				cookie = generateCookie(user);
+			} else {
+				throw new Error("Mauvais login ou mot de passe.");
 			}
 		}
 

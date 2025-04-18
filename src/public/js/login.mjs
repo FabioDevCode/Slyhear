@@ -21,13 +21,25 @@ document.getElementById("login_form")?.addEventListener("submit", async function
 
         const resp = await call.json();
 
-        if(resp.cookie) {
-            document.cookie = `slyhear=${resp.cookie}; path=/;`;
-	        window.location.replace('/library');
+        if(!resp?.cookie) {
+            throw "Login et/ou mot de passe incorrect.";
         }
+
+        document.cookie = `slyhear=${resp.cookie}; path=/;`;
+        window.location.replace('/library');
     } catch (err) {
-        console.error(err);
-        // toastr erreur
+        Toastify({
+			text: "Login et/ou mot de passe incorrect.",
+			className: "error",
+			duration: 3000,
+			newWindow: true,
+			close: false,
+			gravity: "bottom",
+			position: "left",
+			stopOnFocus: true,
+			onClick: () => {},
+		}).showToast();
+		return;
     }
 });
 
