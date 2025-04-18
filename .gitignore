@@ -13,3 +13,4 @@ src/upload/images/*.jpg
 src/upload/sounds/*.mp3
 src/upload/music
 build-and-push.sh
+pense_bete.txt
