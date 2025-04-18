@@ -1,12 +1,26 @@
 <div align="center" style="display: flex">
     <br>
-    <img height="120px" src="./images/Slyhear_logo_long.png" alt="Slyhear Logo" />
+    <img height="120px" src="./images/Slyhear.png" alt="Slyhear Logo" />
 </div>
 
 <br>
 
 <h3 align="center">Slyhear</h3>
 <p align="center">Une application de streaming audio.</p>
+
+<div align="center" style="display: inline-block">
+    <img src="https://img.shields.io/badge/license-MIT-C7191B?style=flat-square" alt="License MIT"/>
+    <img src="https://img.shields.io/badge/Documentation-non%20disponible-F5F8FA?style=flat-square" alt="Docs"/>
+    <img src="https://img.shields.io/badge/Docker-fabiodevcode/slyhear:dev-1C63ED?style=flat-square" alt="docker"/>
+</div>
+
+---
+
+Slyhear et une application de streaming audio personnel qui permet de télécharger des musiques depuis des URL youtube et de les utiliser dans l'application.
+
+Ce projet à pour but de m'exercer et expérimenter un certains nombres de choses tout en contruisant un porjet concret, totalement fonctionnel et utilisable.
+
+## Technologies
 
 <div align="center" style="display: inline-block">
     <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
@@ -48,6 +62,6 @@ docker run -p 3324:3324 --name slyhear-dev fabiodevcode/slyhear:dev
 
 ##
 
-<img src="https://badgen.net/badge/Fait avec fun par/moi/C7191B" />
+<img src="https://badgen.net/badge/Fait avec fun par/Fabio%20R.%20LOPES/C7191B" />
 
 <br>
