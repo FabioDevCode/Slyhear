@@ -3,8 +3,6 @@
     <img height="120px" src="./images/Slyhear.png" alt="Slyhear Logo" />
 </div>
 
-<br>
-
 <h3 align="center">Slyhear</h3>
 <p align="center">Une application de streaming audio.</p>
 
@@ -63,5 +61,3 @@ docker run -p 3324:3324 --name slyhear-dev fabiodevcode/slyhear:dev
 ##
 
 <img src="https://badgen.net/badge/Fait avec fun par/Fabio%20R.%20LOPES/C7191B" />
-
-<br>
