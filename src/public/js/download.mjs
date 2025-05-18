@@ -1,43 +1,81 @@
-let allTrashBtn = document.querySelectorAll("[data-trash]");
-
-const showList = () => {
-	const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
-	const ulAllList = document.querySelector("[data-slyher-list]");
-	let content = "";
-
-	if (arrayList.length) {
-		for (const link of arrayList) {
-			content += `<li><div><h3>${link.title}</h3><p>${link.url}</p></div><div class="trash-list"><button data-trash="" data-trash-title="${link.title}"><i class="fas fa-times"></i></button></div></li>`;
-		}
-	} else {
-		content = '<div class="none-list"><i class="far fa-frown"></i><p>Votre liste est vide</p></div>';
-	}
-
-	ulAllList.innerHTML = content;
-	content = "";
-	allTrashBtn = document.querySelectorAll("[data-trash]");
-
-	for (const trash_btn of allTrashBtn) {
-		trash_btn.addEventListener("click", function () {
-			const titleToRemove = this.getAttribute("data-trash-title");
-			const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
-			const updatedArrayList = arrayList.filter(
-				(item) => item.title !== titleToRemove,
-			);
-			localStorage.setItem("slyhear-list", JSON.stringify(updatedArrayList));
-			showList();
-		});
-	}
+const handleTrashClick = async(id) => {
+	if(!id) return;
+	await fetch(`/action/remove_list/${id}`);
+	const link = document.querySelector(`[data-link-id="link_${id}"]`);
+	if(link) {
+		link.remove();
+	};
 };
 
-showList();
+const createLinkElement = (link) => {
+	const li = document.createElement("li");
+	li.setAttribute("data-link-id", `link_${link.id}`)
 
-// Ajouter à la liste -------------------------------------------------- //
-document.querySelector("[btn-add-list]").addEventListener("click", () => {
-	const url = document.querySelector('[name="url"]');
-	const title = document.querySelector('[name="title"]');
+	const contentDiv = document.createElement("div");
 
-	if (!url.value.length || !title.value.length) {
+	const title = document.createElement("h3");
+	title.textContent = link.title;
+	contentDiv.appendChild(title);
+
+	const url = document.createElement("p");
+	url.textContent = link.url;
+	contentDiv.appendChild(url);
+
+	const trashDiv = document.createElement("div");
+	trashDiv.className = "trash-list";
+
+	const button = document.createElement("button");
+	button.setAttribute("data-trash", "");
+	button.setAttribute("data-trash-id", link.id);
+	button.setAttribute("data-trash-title", link.title);
+
+	const icon = document.createElement("i");
+	icon.className = "fas fa-times";
+
+	button.appendChild(icon);
+	trashDiv.appendChild(button);
+
+	button.onclick = () => handleTrashClick(link.id);
+
+	li.appendChild(contentDiv);
+	li.appendChild(trashDiv);
+
+	return li;
+};
+
+const resetListAfterDownload = () => {
+	const ul = document.getElementById("link_list");
+
+	ul.innerHTML = "";
+
+	const emptyMessage = document.createElement("div");
+	emptyMessage.className = "none-list";
+	emptyMessage.setAttribute("id", "none-list");
+
+	const icon = document.createElement("i");
+	icon.className = "far fa-frown";
+
+	const text = document.createElement("p");
+	text.textContent = "Votre liste est vide";
+
+	emptyMessage.appendChild(icon);
+	emptyMessage.appendChild(text);
+
+	ul.appendChild(emptyMessage);
+};
+
+document.querySelectorAll('[data-trash]').forEach(btn => {
+	btn.addEventListener("click", async() => {
+		await handleTrashClick(btn.getAttribute('data-trash-id'))
+	})
+});
+
+// Ajouter à la liste ======================================================= //
+document.querySelector("[btn-add-list]").addEventListener("click", async() => {
+	const url = document.querySelector('[name="url"]')?.value;
+	const title = document.querySelector('[name="title"]')?.value;
+
+	if (!url || !title) {
 		Toastify({
 			text: "Veuillez remplir une URL et un TITRE",
 			className: "error",
@@ -52,63 +90,32 @@ document.querySelector("[btn-add-list]").addEventListener("click", () => {
 		return;
 	}
 
-	const arrayList = JSON.parse(localStorage.getItem("slyhear-list"));
+	const call = await fetch("/action/add_list", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			url,
+			title
+		}),
+	});
 
-	for (const musicObj of arrayList) {
-		if (url.value === musicObj.url) {
-			Toastify({
-				text: "Cette URL est déjà présente dans la liste. Veuillez changer l'URL avant de Valider",
-				className: "warning",
-				duration: 3000,
-				newWindow: true,
-				close: false,
-				gravity: "bottom",
-				position: "left",
-				stopOnFocus: true,
-				onClick: () => {},
-			}).showToast();
-			return;
+	const resp = await call.json();
+
+	if(resp?.link) {
+		document.querySelector('[name="url"]').value = "";
+		document.querySelector('[name="title"]').value = "";
+
+		const noneElement = document.getElementById("none-list");
+		if(noneElement) {
+			noneElement.remove();
 		}
-	}
-
-	arrayList.push({
-		url: url.value.trim(),
-		title: title.value.trim(),
-	});
-
-	arrayList.sort((a, b) => {
-		return a.title.localeCompare(b.title);
-	});
-
-	localStorage.setItem("slyhear-list", JSON.stringify(arrayList));
-
-	url.value = "";
-	title.value = "";
-
-	showList();
+		document.getElementById("link_list").insertAdjacentElement("beforeend" , createLinkElement(resp.link));
+	};
 });
 
-// Vider la liste ------------------------------------------------------ //
-document.querySelector("[btn-clear-list]").addEventListener("click", () => {
-	if (window.confirm("Êtes-vous sûre de vouloir vider la liste ?")) {
-		localStorage.setItem("slyhear-list", JSON.stringify([]));
-		Toastify({
-			text: "Liste vider avec succès !",
-			className: "success",
-			duration: 3000,
-			newWindow: true,
-			close: false,
-			gravity: "bottom",
-			position: "left",
-			stopOnFocus: true,
-			onClick: () => {},
-		}).showToast();
-
-		showList();
-	}
-});
-
-// DRAG AND DROP FILE ================================================= //
+// DRAG AND DROP FILE ============================================== //
 const inputFile = document.querySelector("[input-dropzone]");
 const fileContainer = document.querySelector("[drag-and-drop-zone]");
 
@@ -199,7 +206,7 @@ inputFile.addEventListener("change", (e) => {
 	};
 });
 
-// Télécharger exemple de JSON ------------------------------------------- //
+// Télécharger exemple de JSON =========================================== //
 document.querySelector("[btn-dl-exemple]").addEventListener("click", () => {
 	const exemple = [
 		{
@@ -219,51 +226,19 @@ document.querySelector("[btn-dl-exemple]").addEventListener("click", () => {
 	downloadLink.click();
 });
 
-// CALL AJAX TO DOWNLOAD ======================================================== //
+// CALL AJAX TO DOWNLOAD ========================================================== //
 document.querySelector("[btn-download-list]").addEventListener("click", async () => {
-	document.querySelector("#main_download");
-	const listToDownload = JSON.parse(localStorage.getItem("slyhear-list"));
-
-
-	if (!listToDownload.length) {
-		Toastify({
-			text: "Votre liste est vide.",
-			className: "error",
-			duration: 3000,
-			newWindow: true,
-			close: false,
-			gravity: "bottom",
-			position: "left",
-			stopOnFocus: true,
-			onClick: () => {},
-		}).showToast();
-		return;
-	}
 
 	document.querySelector("#downloader-loader").classList.add("loader");
 	document.querySelector("#downloader").classList.remove("none");
 
-	const call = await fetch("/action/download", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			list: listToDownload.map((el) => {
-				return {
-					...el,
-					name: el.url?.split("?v=")[1]?.split('&')[0] || "",
-				};
-			}).sort((a, b) => a.name.localeCompare(b.name)),
-		}),
-	});
-
-	const response = await call.json();
+	const call = await fetch("/action/download");
+	const resp = await call.json();
 
 	document.querySelector("#downloader").classList.add("none");
 	document.querySelector("#downloader-loader").classList.remove("loader");
 
-	if (!response?.ok) {
+	if (!resp?.ok) {
 		Toastify({
 			text: "Une erreur s'est produite lors du téléchargement.",
 			className: "error",
@@ -289,6 +264,7 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 			stopOnFocus: true,
 			onClick: () => {},
 		}).showToast();
-		showList();
+
+		return resetListAfterDownload();
 	}
 });

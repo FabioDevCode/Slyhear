@@ -8,6 +8,18 @@ const __dirname = path.dirname(__filename);
 
 const pythonScriptPath = path.resolve(__dirname, "../scripts/downloadSounds.py");
 
+
+export const prepareListBeforeDl = (baseList) => {
+	const formatedList = baseList.map((el) => {
+		return {
+			...el,
+			name: el.url?.split("?v=")[1]?.split('&')[0] || "",
+		};
+	}).sort((a, b) => a.name.localeCompare(b.name))
+
+	return formatedList;
+};
+
 export const sanatizeUrl = (list) => {
 	const urls = list.map((el) => {
 		try {
@@ -35,7 +47,7 @@ export const sanatizeUrl = (list) => {
 	}).filter(Boolean);
 
 	return urls;
-}
+};
 
 export const downloadFromPython = async (urls) => {
 	const pythonProcess = spawn("python3", [pythonScriptPath, ...urls]);

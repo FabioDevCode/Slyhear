@@ -48,8 +48,18 @@ export const upload = (req, res) => {
 	res.render("upload");
 };
 
-export const download = (req, res) => {
+export const download = async (req, res) => {
+	const list = await models.List.findAll({
+		raw: true,
+		attributes: [
+			"id",
+			"url",
+			"title"
+		]
+	});
+
 	const data = {
+		list,
 		options: [
             { name: 'Option 1', value: '1', checked: true },
             { name: 'Option 2', value: '2' },

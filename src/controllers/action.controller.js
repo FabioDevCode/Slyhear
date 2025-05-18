@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import fs, { truncate } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import bcrypt from "bcryptjs";
@@ -8,14 +8,19 @@ const __dirname = path.dirname(__filename);
 const trackDir = path.join(__dirname, "..", "upload", "sounds");
 
 import models from "../models/index.js";
-import { downloadFromPython, formatedDataForDB, sanatizeUrl } from "../helpers/scripts.helpers.js";
+import { downloadFromPython, formatedDataForDB, sanatizeUrl, prepareListBeforeDl } from "../helpers/scripts.helpers.js";
 import { downloadImagesFromUrls } from "../scripts/downloadImages.js";
 import { generateCookie } from "../helpers/user.helpers.js";
 
 
-export const goDownload = async (req, res) => {
+export const goDownload = async(req, res) => {
 	try {
-		const { list } = req.body;
+		const baseList = await models.List.findAll({
+			raw: true,
+			attributes: ["url", "title"]
+		});
+		const list = prepareListBeforeDl(baseList);
+
 		const urls = sanatizeUrl(list);
 
 		const sounds = await downloadFromPython(urls);
@@ -24,6 +29,7 @@ export const goDownload = async (req, res) => {
 		const preparedData = await formatedDataForDB({ list, sounds, images });
 
 		await models.Tracks.bulkCreate(preparedData);
+		await models.List.destroy({truncate: true});
 
 		res.status(200).json({
 			ok: true
@@ -157,6 +163,49 @@ export const login = async(req, res) => {
 		console.error(err);
 		res.status(500).json({});
 	}
-}
+};
 
 // Penser a faire une route permettant de créer un user en tant qu'admin
+
+export const add_list = async(req, res) => {
+	const { url, title } = req.body;
+
+	try {
+		if(!url || !title) {
+			return res.status(400).json({});
+		}
+
+		const link = await models.List.create({
+			url,
+			title
+		});
+
+		res.status(200).json({
+			link
+		});
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({});
+	}
+};
+
+export const remove_list = async(req, res) => {
+	try {
+		const { id } = req.params;
+
+		if(id) {
+			await models.List.destroy({
+				where: { id }
+			});
+		}
+
+		res.status(200).json({});
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({});
+	}
+};
+
+
+
+

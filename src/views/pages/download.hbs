@@ -48,14 +48,32 @@
     </div>
 
     <div id="main_download-list">
-        <ul data-slyher-list=""></ul>
+        <ul id="link_list" data-slyher-list="">
+            {{#if list}}
+                {{#each list}}
+                    <li data-link-id="link_{{id}}">
+                        <div>
+                            <h3>{{title}}</h3>
+                            <p>{{url}}</p>
+                        </div>
+                        <div class="trash-list">
+                            <button data-trash="" data-trash-id="{{id}}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </li>
+                {{/each}}
+            {{else}}
+                <div id="none-list" class="none-list">
+                    <i class="far fa-frown"></i>
+                    <p>Votre liste est vide</p>
+                </div>
+            {{/if}}
+        </ul>
 
         <div id="download-list-btn">
             <button btn-download-list="" class="btn">
                 Télécharger la liste
-            </button>
-            <button btn-clear-list="" class="btn">
-                Vider la liste
             </button>
         </div>
     </div>
