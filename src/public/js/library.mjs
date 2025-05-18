@@ -33,6 +33,10 @@ document.querySelectorAll(".btn-style-list").forEach(btn => {
 // Function pour supprimer le morceaux de musique ======================//
 document.querySelectorAll(".delete_btn").forEach(delBtn => {
     delBtn.addEventListener("click", async function() {
+        if(!confirm("Êtes-vous sûr de vouloir supprimer cette musique ?")) {
+            return
+        }
+
         const track_id = this.getAttribute("track-id");
 
         try {
