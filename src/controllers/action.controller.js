@@ -1,4 +1,4 @@
-import fs, { truncate } from "node:fs";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import bcrypt from "bcryptjs";
@@ -6,9 +6,15 @@ import bcrypt from "bcryptjs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const trackDir = path.join(__dirname, "..", "upload", "sounds");
+const imagesDir = path.join(__dirname, "..", "upload", "images");
 
 import models from "../models/index.js";
-import { downloadFromPython, formatedDataForDB, sanatizeUrl, prepareListBeforeDl } from "../helpers/scripts.helpers.js";
+import {
+	downloadFromPython,
+	formatedDataForDB,
+	sanatizeUrl,
+	prepareListBeforeDl
+} from "../helpers/scripts.helpers.js";
 import { downloadImagesFromUrls } from "../scripts/downloadImages.js";
 import { generateCookie } from "../helpers/user.helpers.js";
 
@@ -54,7 +60,6 @@ export const setStream = async(req, res) => {
 		const range = req.headers.range;
 
 		if (!range) {
-			// Si pas de range, envoyer le fichier entier
 			res.writeHead(200, {
 				'Content-Type': 'audio/mpeg',
 				'Content-Length': fileSize,
@@ -104,6 +109,18 @@ export const deleteSound = async(req, res) => {
 		if(!isValidId(id)) {
 			throw new Error("Missing ID");
 		}
+
+		const { mp3Path, imagePath } = await models.Tracks.findOne({
+			raw: true,
+			where: { id },
+			attributes: ["mp3Path", "imagePath"]
+		});
+
+		const fileMp3Path = path.join(trackDir, mp3Path);
+		const fileImagePath = path.join(imagesDir, imagePath);
+
+		await fs.promises.rm(fileMp3Path, { force: true });
+		await fs.promises.rm(fileImagePath, { force: true });
 
 		await models.Tracks.destroy({
 			where: { id }
