@@ -37,6 +37,20 @@
 }
 
 ::selection {
-    background-color: transparent;
-    color: transparent;
+    background-color: var(--rouge);
+    color: whitesmoke;
+}
+
+
+.rotate {
+    animation: rotation 2s linear infinite;
+}
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
 }

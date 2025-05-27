@@ -3,7 +3,6 @@
     z-index: 1000;
     height: 100%;
     width: 500px;
-    min-width: ;
     min-width: 300px;
     overflow: auto;
     overflow-y: auto;
@@ -54,6 +53,7 @@
                 box-shadow: var(--i) 0px 0px 2px 0px, var(--i) 0px 0px 2px 0px;
             }
         }
+
     }
 }
 
@@ -75,7 +75,9 @@
     min-height: 84vh;
     background-repeat: no-repeat;
     background-size: 110vh;
-    border-radius: 0px 0px 0px 14px;
+    border-radius: 0px 0px 0px 16px;
+    border-bottom: 1px solid var(--trackColor);
+    border-left: 1px solid var(--trackColor);
 }
 
 #left_bloc {
@@ -216,7 +218,7 @@
 }
 
 input {
-    accent-color: var(--rouge);
+    accent-color: var(--trackColor);
 }
 
 .player-btn {
@@ -357,4 +359,15 @@ button:focus {
 
 .none {
     display: none !important;
+}
+
+
+@media (max-width: 740px) {
+    #main_bloc {
+        border-radius: 0px 0px 0px 0px;
+    }
+
+    #controls {
+        padding: 10px 10px 10px 0px;
+    }
 }

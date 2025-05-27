@@ -10,6 +10,7 @@ const progressTime = document.getElementById("progress-time");
 const progressDuration = document.getElementById("progress-duration");
 const randomButton = document.querySelector("#random");
 const boucleButton = document.querySelector("#boucle");
+const iconMenuPlayer = document.querySelector("#player_menu_icon");
 const seekAmount = 5; // Nombre de secondes à avancer/reculer
 
 // normal, random or same
@@ -41,11 +42,14 @@ boucleButton.addEventListener("click", function() {
 function clickOnPlay() {
     playButton.classList.add("none");
     pauseButton.classList.remove("none");
+    iconMenuPlayer.classList.add("rotate");
 };
 
 function clickOnPause() {
     pauseButton.classList.add("none");
     playButton.classList.remove("none");
+    iconMenuPlayer.classList.remove("rotate");
+
 };
 
 function formatTime(seconds) {
@@ -69,6 +73,7 @@ function getContrastColor(hex) {
 };
 
 // Tableau des chansons
+const songsColors = Array.from(document.querySelectorAll('.track')).map(track => track.getAttribute('track-color'));
 const songs = Array.from(document.querySelectorAll('.track')).map(track => track.getAttribute('song-id'));
 let _currentSongIndex = 0;
 
@@ -120,10 +125,16 @@ const loadSong = (songCode) => {
     progressBar.value = 0;
 };
 
+const setColor = (songColor) => {
+    document.documentElement.style.setProperty('--trackColor', songColor);
+}
+
+
 // Gérer les événements des pistes (clique sur une chanson)
 document.querySelectorAll('.track').forEach(track => {
     track.addEventListener('click', function() {
         currentSongIndex = this.getAttribute('index');
+        setColor(songsColors[currentSongIndex]);
         loadSong(songs[currentSongIndex]);
         clickOnPlay();
         audio.play();
@@ -131,6 +142,7 @@ document.querySelectorAll('.track').forEach(track => {
 });
 
 // Charger la première chanson
+setColor(songsColors[currentSongIndex]);
 loadSong(songs[currentSongIndex]);
 
 // Écouteurs d'événements pour les boutons de contrôle
@@ -173,6 +185,7 @@ prevButton.addEventListener('click', () => {
             break;
     }
 
+    setColor(songsColors[currentSongIndex]);
     loadSong(songs[currentSongIndex]);
     clickOnPlay();
     audio.play();
@@ -200,6 +213,7 @@ nextButton.addEventListener('click', () => {
             break;
     }
 
+    setColor(songsColors[currentSongIndex]);
     loadSong(songs[currentSongIndex]);
     clickOnPlay();
     audio.play();
@@ -228,6 +242,7 @@ audio.addEventListener('ended', () => {
             break;
     }
 
+    setColor(songsColors[currentSongIndex]);
     loadSong(songs[currentSongIndex]);
     audio.play();
 });

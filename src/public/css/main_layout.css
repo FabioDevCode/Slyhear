@@ -22,7 +22,7 @@ body {
 			border: none;
 			height: 1px;
 			background: #c71717;
-			background: linear-gradient(90deg, #151414 8%,  #c71717 0%, #151414 86%);
+			background: linear-gradient(90deg, #151414 8%,  var(--rouge) 0%, #151414 86%);
 		}
 
 		ul {
@@ -75,11 +75,13 @@ body {
 
 				&:hover {
 					background-color: #1e1e1e;
+					background: linear-gradient(to right, #1e1e1e 45%, #151414 100%);
 				}
 			}
 
 			li.active {
 				background-color: #1e1e1e;
+				background: linear-gradient(to right, #1e1e1e 45%, #151414 100%);
 			}
 		}
 	}
