@@ -1,5 +1,5 @@
 #list-player {
-	background-color: #151515;
+	background-color: #1e1e1e;
     z-index: 1000;
     height: 100%;
     width: 500px;
@@ -15,17 +15,17 @@
         min-height: max-content;
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 3px;
         width: 100%;
-        padding: 6px;
+        padding: 4px;
 
         li {
             cursor: pointer;
-        	background-color: #252525;
+        	background-color: #151414;
             display: flex;
             align-items: center;
             gap: 10px;
-            height: 70px;
+            height: 60px;
             width: 100%;
             overflow: hidden;
             padding: 0 12px;
@@ -39,18 +39,19 @@
 
             p {
                 line-height: 20px;
+                font-size: 14px;
             }
 
             &.active {
-                background: linear-gradient(to right, #252525 25%, var(--i) 100%);
+                background: linear-gradient(to right, #151414 25%, var(--i) 100%);
                 border: 1px solid var(--i);
-                box-shadow: rgba(190, 194, 197, 0.3) 0px 0px 3px 0px, var(--i) 0px 0px 2px 0px;
+                box-shadow: var(--i) 0px 0px 2px 0px, var(--i) 0px 0px 2px 0px;
             }
 
             &:hover {
-                background: linear-gradient(to right, #252525 25%, var(--i) 100%);
+                background: linear-gradient(to right, #151414 25%, var(--i) 100%);
                 border: 1px solid var(--i);
-                box-shadow: rgba(190, 194, 197, 0.3) 0px 0px 3px 0px, var(--i) 0px 0px 2px 0px;
+                box-shadow: var(--i) 0px 0px 2px 0px, var(--i) 0px 0px 2px 0px;
             }
         }
     }
@@ -214,6 +215,10 @@
     width: 99%;
 }
 
+input {
+    accent-color: var(--rouge);
+}
+
 .player-btn {
     position: relative;
     display: flex;
@@ -269,7 +274,7 @@ button:focus {
 
 #pause,
 #play {
-    transform: scale(.86);
+    transform: scale(.80);
 }
 
 #play i {
