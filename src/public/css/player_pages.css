@@ -20,6 +20,7 @@
 
         li {
             cursor: pointer;
+            user-select: none;
         	background-color: #151414;
             display: flex;
             align-items: center;
@@ -121,6 +122,7 @@
 #name_sound {
     display: inline-block;
     text-align: center;
+    user-select: none;
     width: 26vw;
     font-size: 20px;
     font-weight: 500;
@@ -138,11 +140,10 @@
 }
 
 #main_img {
-    /* width: 540px; */
     width: 26vw;
+    user-select: none;
     aspect-ratio: 1 / 1;
     border-radius: 6px;
-    /* margin-left: 7vw; */
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -161,6 +162,7 @@
 }
 
 #controls {
+    user-select: none;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
