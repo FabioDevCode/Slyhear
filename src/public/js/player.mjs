@@ -2,7 +2,6 @@
 const audio = document.getElementById('audio');
 const playButton = document.getElementById('play');
 const pauseButton = document.getElementById('pause');
-const stopButton = document.getElementById('stop');
 const prevButton = document.getElementById('prev');
 const nextButton = document.getElementById('next');
 const progressBar = document.getElementById('progress-bar');
@@ -12,9 +11,9 @@ const randomButton = document.querySelector("#random");
 const boucleButton = document.querySelector("#boucle");
 const iconMenuPlayer = document.querySelector("#player_menu_icon");
 const seekAmount = 5; // Nombre de secondes à avancer/reculer
+let orderType = "normal"; // normal, random or same
+let audioSource = null; // Permet de gérer le flux
 
-// normal, random or same
-let orderType = "normal";
 
 randomButton.addEventListener("click", function() {
     boucleButton.classList.remove("active");
@@ -38,14 +37,13 @@ boucleButton.addEventListener("click", function() {
     }
 });
 
-
-function clickOnPlay() {
+function clickOnPlay() { // Style function
     playButton.classList.add("none");
     pauseButton.classList.remove("none");
     iconMenuPlayer.classList.add("rotate");
 };
 
-function clickOnPause() {
+function clickOnPause() { // Style function
     pauseButton.classList.add("none");
     playButton.classList.remove("none");
     iconMenuPlayer.classList.remove("rotate");
@@ -70,6 +68,16 @@ function getContrastColor(hex) {
     let b = parseInt(hex.substr(4, 2), 16);
     let brightness = (r * 299 + g * 587 + b * 114) / 1000;
     return brightness > 128 ? '#101010' : '#F1F1F1';
+};
+
+const loadSong = (songCode) => {
+    audioSource = new Audio(`/action/stream/${songCode}`);
+    progressBar.value = 0;
+    audio.src = audioSource.src;
+};
+
+const setColor = (songColor) => {
+    document.documentElement.style.setProperty('--trackColor', songColor);
 };
 
 // Tableau des chansons
@@ -114,22 +122,6 @@ Object.defineProperty(window, 'currentSongIndex', {
 
 onSongIndexChange(currentSongIndex);
 
-let audioSource = null; // Permet de gérer le flux
-
-// Fonction pour charger et streamer une chanson
-const loadSong = (songCode) => {
-    // Créer une nouvelle URL de streaming via l'API avec le code
-    audioSource = new Audio(`/action/stream/${songCode}`);
-    audio.src = audioSource.src; // Met à jour la source de l'élément audio
-    // Mettre à jour la barre de progression à chaque fois que la chanson change
-    progressBar.value = 0;
-};
-
-const setColor = (songColor) => {
-    document.documentElement.style.setProperty('--trackColor', songColor);
-}
-
-
 // Gérer les événements des pistes (clique sur une chanson)
 document.querySelectorAll('.track').forEach(track => {
     track.addEventListener('click', function() {
@@ -145,21 +137,16 @@ document.querySelectorAll('.track').forEach(track => {
 setColor(songsColors[currentSongIndex]);
 loadSong(songs[currentSongIndex]);
 
+
 // Écouteurs d'événements pour les boutons de contrôle
 playButton.addEventListener('click', () => {
     clickOnPlay();
     audio.play();
 });
-
+ 
 pauseButton.addEventListener('click', () => {
     clickOnPause();
     audio.pause();
-});
-
-stopButton?.addEventListener('click', () => {
-    clickOnPause();
-    audio.pause();
-    audio.currentTime = 0;
 });
 
 prevButton.addEventListener('click', () => {
@@ -261,9 +248,10 @@ audio.addEventListener('timeupdate', () => {
 
 // CLAVIER MAPPING ============================================================= //
 document.addEventListener('keydown', (event) => {
+    event.preventDefault();
+
     switch (event.code) {
-        case 'Space': // Lecture / Pause
-            event.preventDefault(); // Empêche le scroll vers le bas
+        case 'Space':
             if (audio.paused) {
                 clickOnPlay();
                 audio.play();
@@ -273,19 +261,15 @@ document.addEventListener('keydown', (event) => {
             }
             break;
         case 'ArrowLeft':
-            event.preventDefault();
             audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
             break;
         case 'ArrowRight':
-            event.preventDefault();
             audio.currentTime = Math.min(audio.currentTime + seekAmount, Math.round(audio.duration));
             break;
         case 'ArrowUp':
-            event.preventDefault();
             prevButton.click();
             break;
         case 'ArrowDown':
-            event.preventDefault();
             nextButton.click();
             break;
         default:

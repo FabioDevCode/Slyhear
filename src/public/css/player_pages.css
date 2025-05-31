@@ -106,18 +106,6 @@
             color: white;
         }
     }
-
-    h3 {
-        font-size: 30px;
-        display: block;
-        display: flex;
-        align-items: center;
-        height: 100%;
-        padding: 0px 20px 0px 40px;
-        background: #151414;
-        background: linear-gradient(90deg, transparent 0%, rgba(21,20,20,.5) 30%, rgba(21,20,20,1) 100%);
-        color: white;
-    }
 }
 
 #left_content {

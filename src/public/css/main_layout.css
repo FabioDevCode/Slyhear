@@ -22,7 +22,7 @@ body {
 			border: none;
 			height: 1px;
 			background: #c71717;
-			background: linear-gradient(90deg, #151414 8%,  var(--rouge) 0%, #151414 86%);
+			background: linear-gradient(90deg, #151414 8%, var(--trackColor) 0%, #151414 86%);
 		}
 
 		ul {
@@ -75,13 +75,13 @@ body {
 
 				&:hover {
 					background-color: #1e1e1e;
-					background: linear-gradient(to right, #1e1e1e 45%, #151414 100%);
+					background: linear-gradient(to right, #222222 45%, #151414 100%);
 				}
 			}
 
 			li.active {
 				background-color: #1e1e1e;
-				background: linear-gradient(to right, #1e1e1e 45%, #151414 100%);
+				background: linear-gradient(to right, #222222 45%, #151414 100%);
 			}
 		}
 	}
@@ -99,8 +99,13 @@ body {
 	margin-left: 6px;
 	padding: 10px 0px;
 
-	img {
+	/* img {
 		height: 60px;
+	} */
+
+	svg {
+		height: 60px;
+		width: auto;
 	}
 
 	h1 {
