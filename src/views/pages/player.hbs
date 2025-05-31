@@ -5,9 +5,6 @@
                 <button>
                     <i class="fas fa-bars"></i>
                 </button>
-                <h3 id="name_nav_top">
-                    Bibliothèque
-                </h3>
             </div>
 
             <div id="left_content">
@@ -22,8 +19,8 @@
             <ul>
                 {{#each tracks}}
                     <li class="track {{#if @first}}active{{/if}}" index="{{@index}}" track-id="{{id}}" song-id="{{songId}}" track-duration="{{duration}}" style="--i: {{color}};" track-color="{{color}}" track-title="{{title}}">
-                        {{#if this.image}}
-                            <img src="data:image/jpeg;base64,{{this.image}}" alt="Jaquette de {{this.title}}">
+                        {{#if imgPath}}
+                            <img src="{{imgPath}}" alt="Jaquette de {{title}}">
                         {{else}}
                             <img src="/img/_default.jpg" alt="Jaquette par défaut Slyhear">
                         {{/if}}

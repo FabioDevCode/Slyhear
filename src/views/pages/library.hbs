@@ -18,23 +18,24 @@
 
     <ul id="library_sounds" class="list">
         {{#each tracks}}
-        <li data-tracks-id="{{id}}">
-            <button class="delete_btn" track-id="{{id}}">
-                <i class="fas fa-trash-alt"></i>
-            </button>
-            {{!-- <button class="update-btn" track-id="{{id}}">
-                <i class="fas fa-pen"></i>
-            </button> --}}
+            <li data-tracks-id="{{id}}">
+                <button class="delete_btn" track-id="{{id}}">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
 
-            {{#if image}}
-                <img src="data:image/jpeg;base64,{{image}}" alt="{{title}}">
-            {{else}}
-                <img src="/img/_default.jpg" alt="Jaquette par défaut Slyhear">
-            {{/if}}
-            <h2>
-                {{title}}
-            </h2>
-        </li>
+                {{!-- <button class="update-btn" track-id="{{id}}">
+                    <i class="fas fa-pen"></i>
+                </button> --}}
+
+                {{#if imgPath}}
+                    <img src="{{imgPath}}" alt="{{title}}">
+                {{else}}
+                    <img src="/img/_default.jpg" alt="Jaquette par défaut Slyhear">
+                {{/if}}
+                <h2>
+                    {{title}}
+                </h2>
+            </li>
         {{/each}}
     </ul>
 </div>

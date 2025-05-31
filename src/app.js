@@ -102,7 +102,11 @@ const hbs = create({
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", [`${__dirname}/views/pages`]);
+
 app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/sm", express.static(path.join(__dirname, "upload", "images")));
+
+
 
 routes(app);
 

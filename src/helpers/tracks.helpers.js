@@ -21,19 +21,12 @@ export const preparedTracksToShow = async (arrayTracks) => {
 	try {
 		const tracksWithImages = await Promise.all(
 			arrayTracks.map(async (track) => {
-				let imageBuffer = null;
-
-				if (track.imagePath) {
-					const imagePath = path.join(imagesDir, track.imagePath);
-					imageBuffer = await getImageBuffer(imagePath);
-				}
-
 				return {
 					id: track?.id,
 					title: track?.title,
 					songId: track?.videoId,
 					color: track?.mainColor,
-					image: imageBuffer ? imageBuffer.toString("base64") : null,
+					imgPath: track.imagePath ? `/sm/${track.imagePath}`: '/sm/_default.jpg',
 					duration: track?.duration
 				};
 			}),
