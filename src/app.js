@@ -45,10 +45,11 @@ const morgan_config = {
 	skip: (req) => {
 		if (
 			req.url === "/" ||
-			req.url.includes("/css") ||
-			req.url.includes("/img") ||
-			req.url.includes("/js") ||
-			req.url.includes("/plugins")
+			req.url.includes("/css/") ||
+			req.url.includes("/img/") ||
+			req.url.includes("/js/") ||
+			req.url.includes(".jpg") ||
+			req.url.includes("/plugins/")
 		) {
 			return true;
 		}

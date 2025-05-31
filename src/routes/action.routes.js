@@ -6,6 +6,8 @@ import { loginControl } from "../validators/user.validators.js";
 import { isConnected } from "../middlewares/cookie.middlewares.js";
 
 router.get("/download", isConnected, actl.goDownload);
+router.get('/progress/:jobId', actl.getJobProgress);
+
 router.get("/delete/:id", isConnected, actl.deleteSound);
 router.get("/stream/:code", isConnected, actl.setStream);
 router.post("/add_list", isConnected, actl.add_list);

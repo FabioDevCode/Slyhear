@@ -43,27 +43,6 @@ const createLinkElement = (link) => {
 	return li;
 };
 
-const resetListAfterDownload = () => {
-	const ul = document.getElementById("link_list");
-
-	ul.innerHTML = "";
-
-	const emptyMessage = document.createElement("div");
-	emptyMessage.className = "none-list";
-	emptyMessage.setAttribute("id", "none-list");
-
-	const icon = document.createElement("i");
-	icon.className = "far fa-frown";
-
-	const text = document.createElement("p");
-	text.textContent = "Votre liste est vide";
-
-	emptyMessage.appendChild(icon);
-	emptyMessage.appendChild(text);
-
-	ul.appendChild(emptyMessage);
-};
-
 document.querySelectorAll('[data-trash]').forEach(btn => {
 	btn.addEventListener("click", async() => {
 		await handleTrashClick(btn.getAttribute('data-trash-id'))
@@ -226,45 +205,26 @@ document.querySelector("[btn-dl-exemple]").addEventListener("click", () => {
 	downloadLink.click();
 });
 
-// CALL AJAX TO DOWNLOAD ========================================================== //
+// DOWNLOAD ======================================================================= //
 document.querySelector("[btn-download-list]").addEventListener("click", async () => {
-
 	document.querySelector("#downloader-loader").classList.add("loader");
 	document.querySelector("#downloader").classList.remove("none");
 
 	const call = await fetch("/action/download");
 	const resp = await call.json();
 
-	document.querySelector("#downloader").classList.add("none");
-	document.querySelector("#downloader-loader").classList.remove("loader");
-
-	if (!resp?.ok) {
+	if (!resp.jobId) {
 		Toastify({
-			text: "Une erreur s'est produite lors du téléchargement.",
-			className: "error",
-			duration: 3000,
-			newWindow: true,
-			close: false,
-			gravity: "bottom",
-			position: "left",
-			stopOnFocus: true,
-			onClick: () => {},
+		  text: "Erreur lors du lancement du téléchargement",
+		  className: "error",
+		  duration: 3000,
+		  gravity: "bottom",
+		  position: "left",
 		}).showToast();
 		return;
-	} else {
-		localStorage.setItem("slyhear-list", JSON.stringify([]));
-		Toastify({
-			text: "Le téléchargement est un succès !",
-			className: "success",
-			duration: 3000,
-			newWindow: true,
-			close: false,
-			gravity: "bottom",
-			position: "left",
-			stopOnFocus: true,
-			onClick: () => {},
-		}).showToast();
-
-		return resetListAfterDownload();
 	}
+
+	localStorage.setItem("activeJobId", resp.jobId);
+
+	pollDownloadProgress(resp.jobId);
 });

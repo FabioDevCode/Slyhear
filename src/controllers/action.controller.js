@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fork } from "node:child_process";
 import bcrypt from "bcryptjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -9,41 +10,64 @@ const trackDir = path.join(__dirname, "..", "upload", "sounds");
 const imagesDir = path.join(__dirname, "..", "upload", "images");
 
 import models from "../models/index.js";
-import {
-	downloadFromPython,
-	formatedDataForDB,
-	sanatizeUrl,
-	prepareListBeforeDl
-} from "../helpers/scripts.helpers.js";
-import { downloadImagesFromUrls } from "../scripts/downloadImages.js";
-import { generateCookie } from "../helpers/user.helpers.js";
 
+import { generateCookie } from "../helpers/user.helpers.js";
+import { generateAlphaNum } from '../utils/string.utils.js';
+
+const jobs = {}; // JobId -> { status, logs }
 
 export const goDownload = async(req, res) => {
 	try {
-		const baseList = await models.List.findAll({
-			raw: true,
-			attributes: ["url", "title"]
+		const jobId = generateAlphaNum(32);
+
+		jobs[jobId] = {
+			status: 'started',
+			logs: [],
+		};
+
+		const child = fork(path.join(__dirname, '../workers/downloadChildTask.js'));
+
+		child.on('message', (msg) => {
+			if (msg.type === 'log') {
+				jobs[jobId].logs.push(msg.data);
+			} else if (msg.type === 'status') {
+				jobs[jobId].status = msg.data;
+			}
 		});
-		const list = prepareListBeforeDl(baseList);
 
-		const urls = sanatizeUrl(list);
+		child.on('exit', (code) => {
+			if (code === 0) {
+				jobs[jobId].status = 'finished';
+			} else {
+				jobs[jobId].status = 'error';
+				jobs[jobId].logs.push(`Exited with code ${code}`);
+			}
+		});
 
-		const sounds = await downloadFromPython(urls);
-		const images = await downloadImagesFromUrls(urls);
-
-		const preparedData = await formatedDataForDB({ list, sounds, images });
-
-		await models.Tracks.bulkCreate(preparedData);
-		await models.List.destroy({truncate: true});
+		child.send({ jobId });
 
 		res.status(200).json({
-			ok: true
+			ok: true,
+			jobId
 		});
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({});
 	}
+};
+
+export const getJobProgress = (req, res) => {
+	const { jobId } = req.params;
+	const job = jobs[jobId];
+
+	if (!job) {
+		return res.status(404).json({ status: 'not_found' });
+	}
+
+	res.json({
+		status: job.status,
+		logs: job.logs,
+	});
 };
 
 export const setStream = async(req, res) => {
@@ -222,7 +246,3 @@ export const remove_list = async(req, res) => {
 		res.status(500).json({});
 	}
 };
-
-
-
-
