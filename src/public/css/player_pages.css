@@ -211,6 +211,11 @@ input {
     accent-color: var(--trackColor);
 }
 
+input[type="range"]:focus,
+.controls button:focus {
+    outline: none;
+}
+
 .player-btn {
     position: relative;
     display: flex;
@@ -354,7 +359,7 @@ button:focus {
 
 @media (max-width: 740px) {
     #main_bloc {
-        border-radius: 0px 0px 0px 0px;
+        border-radius: 0px 0px 0px 4px;
     }
 
     #controls {
