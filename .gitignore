@@ -3,6 +3,8 @@
 .DS_Store
 node_modules
 node_modules/*
+site
+site/*
 package-lock.json
 src/public/audio/*
 src/config/database.js
