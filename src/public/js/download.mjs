@@ -51,8 +51,8 @@ document.querySelectorAll('[data-trash]').forEach(btn => {
 
 // Ajouter à la liste ======================================================= //
 document.querySelector("[btn-add-list]").addEventListener("click", async() => {
-	const url = document.querySelector('[name="url"]')?.value;
-	const title = document.querySelector('[name="title"]')?.value;
+	const url = document.querySelector('[name="url"]')?.value?.trim();
+	const title = document.querySelector('[name="title"]')?.value?.trim();
 
 	if (!url || !title) {
 		Toastify({
@@ -225,6 +225,5 @@ document.querySelector("[btn-download-list]").addEventListener("click", async ()
 	}
 
 	localStorage.setItem("activeJobId", resp.jobId);
-
 	pollDownloadProgress(resp.jobId);
 });
