@@ -208,7 +208,7 @@
 }
 
 input {
-    accent-color: var(--trackColor);
+    accent-color: var(--rouge);
 }
 
 input[type="range"]:focus,
@@ -346,10 +346,6 @@ button:focus {
 
 .order-play.active:hover i {
     color: var(--rouge) !important;
-}
-
-#boucle:active {
-    transform: scale(.85) rotateZ(360deg) !important;
 }
 
 .none {
