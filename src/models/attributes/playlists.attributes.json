@@ -1,0 +1,14 @@
+{
+    "title": {
+		"type": "STRING",
+		"allowNull": false
+	},
+    "userId": {
+        "type": "INTEGER",
+        "allowNull": false
+    },
+    "trackIds": {
+        "type": "JSON",
+        "allowNull": false
+    }
+}
