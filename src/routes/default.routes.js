@@ -11,5 +11,9 @@ router.get("/library", isConnected, dctl.library);
 router.get("/upload", isConnected, dctl.upload);
 router.get("/download", isConnected, dctl.download);
 
+router.get("/playlist", isConnected, dctl.playlist);
+
+
+
 
 export default router;

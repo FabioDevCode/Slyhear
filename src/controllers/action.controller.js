@@ -246,3 +246,24 @@ export const remove_list = async(req, res) => {
 		res.status(500).json({});
 	}
 };
+
+export const new_playlist = async(req, res) => {
+	const { title, trackIds } = req.body;
+
+	try {
+		const playlist = await models.Playlists.create({
+			title,
+			userId: req.user.id,
+			trackIds,
+		});
+
+		console.log(playlist);
+
+		res.status(200).json({
+			message: "OK"
+		});
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({});
+	}
+};

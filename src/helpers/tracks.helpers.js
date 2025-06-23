@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import path from "node:path";
+import path, { parse } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -17,24 +17,26 @@ async function getImageBuffer(imagePath) {
 	}
 }
 
-export const preparedTracksToShow = async (arrayTracks) => {
-	try {
-		const tracksWithImages = await Promise.all(
-			arrayTracks.map(async (track) => {
-				return {
-					id: track?.id,
-					title: track?.title,
-					songId: track?.videoId,
-					color: track?.mainColor,
-					imgPath: track.imagePath ? `/sm/${track.imagePath}`: '/sm/_default.jpg',
-					duration: track?.duration
-				};
-			}),
-		);
+export const preparedTracksToShow = (arrayTracks) => {
+	if (!Array.isArray(arrayTracks)) return [];
 
-		return tracksWithImages;
-	} catch (err) {
-		console.error(err);
-		return err;
-	}
+	return arrayTracks.map((track) => ({
+		id: track?.id,
+		title: track?.title,
+		songId: track?.videoId,
+		color: track?.mainColor,
+		imgPath: track?.imagePath ? `/sm/${track.imagePath}` : '/sm/_default.jpg',
+		duration: track?.duration,
+	}));
 };
+
+export const preparedTracksToPlaylist = (arrayTracks) => {
+	if (!Array.isArray(arrayTracks)) return [];
+
+	return arrayTracks.map((track) => ({
+		id: track?.id,
+		title: track?.title,
+		trackIds: parse(track?.trackIds)
+		// imgPath: track?.imagePath ? `/sm/${track.imagePath}` : '/sm/_default.jpg',
+	}));
+}

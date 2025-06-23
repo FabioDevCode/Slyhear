@@ -126,6 +126,7 @@ form {
     white-space: nowrap;
     will-change: box-shadow,transform;
     font-size: 18px;
+    gap: 10px;
 }
 
 .btn.default {
@@ -136,7 +137,7 @@ form {
 
 .btn.fit {
     width: max-content;
-    padding: 0 40px;
+    padding: 0 20px;
 }
 
 .btn:not(.btn.default):hover {

@@ -1,0 +1,72 @@
+<div id="main_playlist">
+    <div id="nav-playlist">
+        {{!-- <button id="btn_create_playlist" class="btn fit none">
+            <i class="fas fa-plus"></i>
+            Créer une liste de lecture
+        </button>
+        <button id="btn_save_playlist" class="btn fit">
+            <i class="fas fa-check"></i>
+            Enregistrer la liste de lecture
+        </button> --}}
+        <h2>
+            Création d'une nouvelle liste de lecture
+        </h2>
+    </div>
+
+    <div id="content_playlist">
+        <div id="list_fields" class="playlist_form none">
+            LISTE
+        </div>
+
+        {{!-- Show + bouton d'update et de delete --}}
+        <div id="show_fields" class="playlist_form none">
+            SHOW
+        </div>
+
+        {{!-- Update + save --}}
+        <div id="update_fields" class="playlist_form none">
+            UPDATE
+        </div>
+
+        {{!-- Create --}}
+        <div id="create_fields" class="playlist_form">
+            <div class="form-group">
+                <label for="title">
+                    Nom de la liste de lecture
+                </label>
+                <input name="title" type="text" placeholder="Nom de la liste de lecture" maxlength="32">
+            </div>
+
+            <div class="select_track_right">
+                Sélectionne les musiques dans la liste
+                <i class="fas fa-arrow-right"></i>
+            </div>
+
+            <button id="save_new_playlist" class="btn fit">
+                <i class="fas fa-save"></i>
+                Enregistrer la liste de lecture
+            </button>
+        </div>
+
+        <div id="list-playlist">
+            <ul>
+                {{#each tracks}}
+                    <li class="playlist_track" track-id="{{id}}">
+                        {{#if imgPath}}
+                            <img src="{{imgPath}}" alt="Jaquette de {{title}}">
+                        {{else}}
+                            <img src="/img/_default.jpg" alt="Jaquette par défaut Slyhear">
+                        {{/if}}
+                        <p>
+                            {{title}}
+                        </p>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+<script type="module" src="/js/playlist.mjs"></script>

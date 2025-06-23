@@ -15,6 +15,8 @@ router.get("/remove_list/:id", isConnected, actl.remove_list);
 
 router.post("/login", loginControl, actl.login);
 
+router.post("/new_playlist", isConnected, actl.new_playlist);
+
 
 
 export default router;

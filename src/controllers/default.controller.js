@@ -1,5 +1,9 @@
 import models from "../models/index.js";
-import { preparedTracksToShow } from "../helpers/tracks.helpers.js";
+import {
+	preparedTracksToShow,
+	preparedTracksToPlaylist
+} from "../helpers/tracks.helpers.js";
+
 
 export const index = async(req, res) => {
 	res.render("login", {
@@ -16,7 +20,7 @@ export const player = async(req, res) => {
 			order: [["title", "ASC"]]
 		});
 
-		const tracks = await preparedTracksToShow(allTracks);
+		const tracks = preparedTracksToShow(allTracks);
 
 		res.render("player", {
 			tracks
@@ -69,3 +73,33 @@ export const download = async (req, res) => {
 
 	res.render("download", data);
 };
+
+export const playlist = async(req, res) => {
+	try {
+		const allPlaylist = await models.Playlists.findAll({
+			raw: true,
+			attributes: ["id", "title", "userId", "trackIds"]
+		})
+
+		const playlists = allPlaylist;
+
+		const allTracks = await models.Tracks.findAll({
+			raw: true,
+			attributes: ["id", "title", "imagePath"],
+			order: [["title", "ASC"]]
+		});
+
+		const tracks = preparedTracksToPlaylist(allTracks);
+
+		console.log(playlists);
+		
+
+		res.render("playlist", {
+			playlists,
+			tracks,
+		})
+	} catch (err) {
+		console.error(err);
+		res.render("playlist");
+	}
+}
