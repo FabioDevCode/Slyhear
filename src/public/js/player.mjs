@@ -332,12 +332,12 @@ function handleScroll(event) {
         // }
     } else {
         // Scroll horizontal (molette gauche/droite) pour avancer/reculer dans l'audio
-        if (event.deltaX > 0) {
-            // Scroll vers la gauche -> Reculer dans la musique
-            audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
-        } else {
-            // Scroll vers la droite -> Avancer dans la musique
-            audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
-        }
+        // if (event.deltaX > 0) {
+        //     // Scroll vers la gauche -> Reculer dans la musique
+        //     audio.currentTime = Math.max(audio.currentTime - seekAmount, 0);
+        // } else {
+        //     // Scroll vers la droite -> Avancer dans la musique
+        //     audio.currentTime = Math.min(audio.currentTime + seekAmount, audio.duration);
+        // }
     }
 }

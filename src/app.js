@@ -50,7 +50,8 @@ const morgan_config = {
 			req.url.includes("/js/") ||
 			req.url.includes(".jpg") ||
 			req.url.includes("/plugins/") ||
-			req.url.includes("/progress/")
+			req.url.includes("/progress/") ||
+			req.url.includes("/.well-known")
 		) {
 			return true;
 		}

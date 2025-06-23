@@ -8,7 +8,7 @@
 
 <div align="center" style="display: inline-block">
     <img src="https://img.shields.io/badge/license-MIT-C7191B?style=flat-square" alt="License MIT"/>
-    <img src="https://img.shields.io/badge/Documentation-non%20disponible-F5F8FA?style=flat-square" alt="Docs"/>
+    <!-- <img src="https://img.shields.io/badge/Documentation-non%20disponible-F5F8FA?style=flat-square" alt="Docs"/> -->
     <img src="https://img.shields.io/badge/Docker-fabiodevcode/slyhear:dev-1C63ED?style=flat-square" alt="docker"/>
 </div>
 
@@ -33,8 +33,8 @@ Ce projet à pour but de m'exercer et d'expérimenter un certain nombres de chos
 - [x] Bibliothèque d'audios
 - [x] Suppression des audios
 - [x] Lecteur
-- [ ] Mise à jour des audios
 - [ ] Création de playlists
+- [ ] Mise à jour des audios
 - [ ] Multiple utilisateurs
 - [ ] ...
 
