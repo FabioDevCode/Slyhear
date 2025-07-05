@@ -81,18 +81,17 @@ export const playlist = async(req, res) => {
 			attributes: ["id", "title", "userId", "trackIds"]
 		})
 
-		const playlists = allPlaylist;
-
 		const allTracks = await models.Tracks.findAll({
 			raw: true,
 			attributes: ["id", "title", "imagePath"],
 			order: [["title", "ASC"]]
 		});
 
-		const tracks = preparedTracksToPlaylist(allTracks);
+		const playlists = allPlaylist;
 
-		console.log(playlists);
-		
+		console.log("playlists : ", playlists);
+
+		const tracks = preparedTracksToPlaylist(allTracks);
 
 		res.render("playlist", {
 			playlists,

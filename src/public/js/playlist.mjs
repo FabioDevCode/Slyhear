@@ -13,15 +13,15 @@ const getSelectedTracks = () => {
 };
 
 function setSelectedTracks(idArray) {
-  const tracks = document.querySelectorAll('.playlist_track');
-  tracks.forEach(track => {
-    const trackId = parseInt(track.getAttribute('track-id'));
-    if (idArray.includes(trackId)) {
-        track.setAttribute('selected', '');
-    } else {
-        track.removeAttribute('selected');
-    }
-  });
+    const tracks = document.querySelectorAll('.playlist_track');
+    tracks.forEach(track => {
+        const trackId = parseInt(track.getAttribute('track-id'));
+        if (idArray.includes(trackId)) {
+            track.setAttribute('selected', '');
+        } else {
+            track.removeAttribute('selected');
+        }
+    });
 }
 
 tracks.forEach(track => {

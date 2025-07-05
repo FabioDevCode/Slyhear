@@ -8,15 +8,6 @@ const __dirname = path.dirname(__filename);
 const imagesDir = path.join(__dirname, "..", "upload", "images");
 // const soundsDir = path.join(__dirname, "..", "upload", "sounds");
 
-async function getImageBuffer(imagePath) {
-	try {
-		const imageBuffer = await fs.promises.readFile(imagePath);
-		return imageBuffer;
-	} catch (err) {
-		return null;
-	}
-}
-
 export const preparedTracksToShow = (arrayTracks) => {
 	if (!Array.isArray(arrayTracks)) return [];
 
@@ -36,7 +27,7 @@ export const preparedTracksToPlaylist = (arrayTracks) => {
 	return arrayTracks.map((track) => ({
 		id: track?.id,
 		title: track?.title,
-		trackIds: parse(track?.trackIds)
-		// imgPath: track?.imagePath ? `/sm/${track.imagePath}` : '/sm/_default.jpg',
+		imgPath: track?.imagePath ? `/sm/${track.imagePath}` : '/sm/_default.jpg',
+		// trackIds: track?.trackIds ? parse(track?.trackIds) : [],
 	}));
-}
+};
