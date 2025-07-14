@@ -207,7 +207,6 @@ export const login = async(req, res) => {
 };
 
 // Penser a faire une route permettant de créer un user en tant qu'admin
-
 export const add_list = async(req, res) => {
 	const { url, title } = req.body;
 
@@ -247,14 +246,25 @@ export const remove_list = async(req, res) => {
 	}
 };
 
+
 export const new_playlist = async(req, res) => {
 	const { title, trackIds } = req.body;
+	const jacketsArray = trackIds.slice(0, 3);
 
 	try {
+		const jacketsPath = await models.Tracks.findAll({
+			raw: true,
+			where: {
+				id: jacketsArray
+			},
+			attributes: ["imagePath"]
+		});
+
 		const playlist = await models.Playlists.create({
 			title,
 			userId: req.user.id,
 			trackIds,
+			jackets: jacketsPath.map(el => el.imagePath)
 		});
 
 		console.log(playlist);

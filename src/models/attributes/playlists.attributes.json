@@ -10,5 +10,9 @@
     "trackIds": {
         "type": "JSON",
         "allowNull": false
+    },
+    "jackets": {
+        "type": "JSON",
+        "allowNull": false
     }
 }

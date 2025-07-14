@@ -1,7 +1,8 @@
 import models from "../models/index.js";
 import {
 	preparedTracksToShow,
-	preparedTracksToPlaylist
+	preparedTracksToPlaylist,
+	preparedPlaylist
 } from "../helpers/tracks.helpers.js";
 
 
@@ -78,7 +79,7 @@ export const playlist = async(req, res) => {
 	try {
 		const allPlaylist = await models.Playlists.findAll({
 			raw: true,
-			attributes: ["id", "title", "userId", "trackIds"]
+			attributes: ["id", "title", "userId", "trackIds", "jackets"]
 		})
 
 		const allTracks = await models.Tracks.findAll({
@@ -87,11 +88,10 @@ export const playlist = async(req, res) => {
 			order: [["title", "ASC"]]
 		});
 
-		const playlists = allPlaylist;
-
-		console.log("playlists : ", playlists);
-
+		const playlists = preparedPlaylist(allPlaylist);
 		const tracks = preparedTracksToPlaylist(allTracks);
+
+		console.log(playlists);
 
 		res.render("playlist", {
 			playlists,

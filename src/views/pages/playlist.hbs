@@ -9,7 +9,7 @@
             Enregistrer la liste de lecture
         </button> --}}
         <h2>
-            Création d'une nouvelle liste de lecture
+            Liste de lecture
         </h2>
     </div>
 
@@ -46,6 +46,24 @@
                 <i class="fas fa-save"></i>
                 Enregistrer la liste de lecture
             </button>
+
+            <h2>
+                Vos listes de lecture
+            </h2>
+            <div id="existing_playlist" style="overflow: auto;">
+                {{#each playlists}}
+                    <div class="playlist">
+                        <div class="bloc_img">
+                            {{#each jackets}}
+                                <img src="/sm/{{.}}" alt="Jaquette de la liste de lecture {{title}}">
+                            {{/each}}
+                        </div>
+                        <h3>
+                            {{title}}
+                        </h3>
+                    </div>
+                {{/each}}
+            </div>
         </div>
 
         <div id="list-playlist">

@@ -31,3 +31,11 @@ export const preparedTracksToPlaylist = (arrayTracks) => {
 		// trackIds: track?.trackIds ? parse(track?.trackIds) : [],
 	}));
 };
+
+export const preparedPlaylist = (arrayPlaylist) => {
+	for(const playlist of arrayPlaylist) {
+		playlist.jackets = JSON.parse(playlist.jackets)
+	}
+
+	return arrayPlaylist;
+}
