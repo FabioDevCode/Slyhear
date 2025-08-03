@@ -29,6 +29,7 @@ process.on('message', async () => {
 		await models.Tracks.bulkCreate(preparedData);
 		await models.List.destroy({truncate: true});
 
+		console.log("Téléchargement terminé avec succès.")
         process.send({ status: 'success' });
     } catch (error) {
         console.error('Erreur child_process childTaskNotificationPush :', error);

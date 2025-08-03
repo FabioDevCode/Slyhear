@@ -108,6 +108,7 @@ form {
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
+    min-height: 50px;
     display: inline-flex;
     height: 50px;
     justify-content: center;

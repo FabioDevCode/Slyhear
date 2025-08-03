@@ -91,7 +91,7 @@ export const playlist = async(req, res) => {
 		const playlists = preparedPlaylist(allPlaylist);
 		const tracks = preparedTracksToPlaylist(allTracks);
 
-		console.log(playlists);
+		// console.log(playlists);
 
 		res.render("playlist", {
 			playlists,

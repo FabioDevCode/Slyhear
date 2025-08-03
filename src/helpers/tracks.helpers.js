@@ -34,6 +34,7 @@ export const preparedTracksToPlaylist = (arrayTracks) => {
 
 export const preparedPlaylist = (arrayPlaylist) => {
 	for(const playlist of arrayPlaylist) {
+		playlist.trackIds = JSON.parse(playlist.trackIds)
 		playlist.jackets = JSON.parse(playlist.jackets)
 	}
 

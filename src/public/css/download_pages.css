@@ -3,7 +3,7 @@
 	display: flex;
 	height: 100%;
 	gap: 20px;
-	background-color: #1e1e1e;
+	background-color: var(--noir);
 	padding: 20px;
 }
 
@@ -103,8 +103,8 @@
 			height: 100px;
 			gap: 4px;
 			border-radius: 4px;
-			border: 1px dotted #303030;
-			background-color: #252525;
+			border: 1px dotted #393939;
+			background-color: rgba(37, 37, 37, .5);
 			color: rgba(233, 255, 249, 0.25);
 
 			i {

@@ -1,13 +1,5 @@
 <div id="main_playlist">
     <div id="nav-playlist">
-        {{!-- <button id="btn_create_playlist" class="btn fit none">
-            <i class="fas fa-plus"></i>
-            Créer une liste de lecture
-        </button>
-        <button id="btn_save_playlist" class="btn fit">
-            <i class="fas fa-check"></i>
-            Enregistrer la liste de lecture
-        </button> --}}
         <h2>
             Liste de lecture
         </h2>
@@ -17,17 +9,14 @@
         <div id="list_fields" class="playlist_form none">
             LISTE
         </div>
-
         {{!-- Show + bouton d'update et de delete --}}
         <div id="show_fields" class="playlist_form none">
             SHOW
         </div>
-
         {{!-- Update + save --}}
         <div id="update_fields" class="playlist_form none">
             UPDATE
         </div>
-
         {{!-- Create --}}
         <div id="create_fields" class="playlist_form">
             <div class="form-group">
@@ -52,14 +41,14 @@
             </h2>
             <div id="existing_playlist" style="overflow: auto;">
                 {{#each playlists}}
-                    <div class="playlist">
+                    <div class="playlist" id="playlist_{{id}}">
                         <div class="bloc_img">
                             {{#each jackets}}
-                                <img src="/sm/{{.}}" alt="Jaquette de la liste de lecture {{title}}">
+                                <img  src="/sm/{{.}}" alt="Jaquette de la liste de lecture {{title}}" style="--i: {{@index}}">
                             {{/each}}
                         </div>
                         <h3>
-                            {{title}}
+                            {{title}} - <span>{{trackIds.length}}</span>
                         </h3>
                     </div>
                 {{/each}}
@@ -82,9 +71,7 @@
                 {{/each}}
             </ul>
         </div>
-
     </div>
-
 </div>
 
 <script type="module" src="/js/playlist.mjs"></script>
