@@ -9,7 +9,7 @@
 <div align="center" style="display: inline-block">
     <img src="https://img.shields.io/badge/license-MIT-C7191B?style=flat-square" alt="License MIT"/>
     <!-- <img src="https://img.shields.io/badge/Documentation-non%20disponible-F5F8FA?style=flat-square" alt="Docs"/> -->
-    <img src="https://img.shields.io/badge/Docker-fabiodevcode/slyhear:dev-1C63ED?style=flat-square" alt="docker"/>
+    <!-- <img src="https://img.shields.io/badge/Docker-fabiodevcode/slyhear:dev-1C63ED?style=flat-square" alt="docker"/> -->
 </div>
 
 ---
@@ -38,6 +38,7 @@ Ce projet à pour but de m'exercer et d'expérimenter un certain nombres de chos
 - [ ] Multiple utilisateurs
 - [ ] ...
 
+<!-- 
 ## Installation
 
 Uniquement via Docker pour le moment car toujours en cours de développement.<br>
@@ -58,7 +59,9 @@ docker run -p 3324:3324 --name slyhear-dev fabiodevcode/slyhear:dev
 3. Ecoutez
 
 > `http://localhost:3324`
-
+ -->
 ##
 
-<img src="https://badgen.net/badge/Fait%20par/Fabio%20R.%20LOPES/C7191B" />
+<div align="right" style="display: inline-block">
+    <img src="https://badgen.net/badge/Fait%20par/Fabio%20R.%20LOPES/C7191B" />
+</div>
